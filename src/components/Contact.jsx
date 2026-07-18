@@ -12,12 +12,37 @@ const LINKS = [
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', project: '' })
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
 
-  const handleSend = () => {
-    setSent(true)
-    setTimeout(() => setSent(false), 3000)
+  const handleSend = async () => {
+    if (!form.name || !form.email || !form.project) return
+    setStatus('sending')
+    try {
+      const res = await fetch('https://formspree.io/f/mdaqgwno', {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (res.ok) {
+        setStatus('sent')
+        setForm({ name: '', email: '', project: '' })
+        setTimeout(() => setStatus('idle'), 3500)
+      } else {
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 3500)
+      }
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 3500)
+    }
   }
+
+  const buttonLabel = {
+    idle: 'Send message',
+    sending: 'Sending...',
+    sent: 'Message sent',
+    error: 'Something went wrong',
+  }[status]
 
   return (
     <section id="contact" className="border-b-2 border-ink px-5 md:px-10 py-16 md:py-24">
@@ -104,10 +129,11 @@ export default function Contact() {
             </label>
             <motion.button
               onClick={handleSend}
+              disabled={status === 'sending'}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-ink text-paper font-mono text-sm uppercase tracking-wider hover:bg-blue transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-ink text-paper font-mono text-sm uppercase tracking-wider hover:bg-blue transition-colors disabled:opacity-60"
             >
-              {sent ? 'Message sent' : 'Send message'}
+              {buttonLabel}
               <Send size={15} />
             </motion.button>
           </div>
