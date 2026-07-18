@@ -16,11 +16,38 @@ export default function App() {
   const [activeProject, setActiveProject] = useState(null)
   const [activePost, setActivePost] = useState(null)
 
+  const openProject = (id) => {
+    window.history.pushState({ modal: true }, '')
+    setActiveProject(id)
+  }
+
+  const openPost = (id) => {
+    window.history.pushState({ modal: true }, '')
+    setActivePost(id)
+  }
+
+  const closeModal = () => {
+    if (window.history.state && window.history.state.modal) {
+      window.history.back()
+    } else {
+      setActiveProject(null)
+      setActivePost(null)
+    }
+  }
+
+  useEffect(() => {
+    const onPopState = () => {
+      setActiveProject(null)
+      setActivePost(null)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') {
-        setActiveProject(null)
-        setActivePost(null)
+        closeModal()
       }
     }
     document.addEventListener('keydown', onKey)
@@ -38,13 +65,13 @@ export default function App() {
       <Hero />
       <About />
       <Skills />
-      <Projects onOpen={setActiveProject} />
-      <Writing onOpen={setActivePost} />
+      <Projects onOpen={openProject} />
+      <Writing onOpen={openPost} />
       <Contact />
       <Footer />
       <WhatsAppButton />
-      <ProjectModal projectId={activeProject} onClose={() => setActiveProject(null)} />
-      <BlogModal postId={activePost} onClose={() => setActivePost(null)} />
+      <ProjectModal projectId={activeProject} onClose={closeModal} />
+      <BlogModal postId={activePost} onClose={closeModal} />
     </div>
   )
 }
