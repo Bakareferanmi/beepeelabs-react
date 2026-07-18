@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 export default function TrafficLight() {
   return (
     <motion.div
-      className="fixed bottom-5 right-5 z-40"
+      className="fixed bottom-6 left-5 z-40"
       animate={{ y: [0, -6, 0], rotate: [0, -2, 0, 2, 0] }}
       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
     >
@@ -27,3 +27,5 @@ export default function TrafficLight() {
     </motion.div>
   )
 }
+
+
