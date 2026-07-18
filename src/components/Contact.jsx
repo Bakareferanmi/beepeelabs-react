@@ -1,0 +1,118 @@
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Mail, Globe, Send } from 'lucide-react'
+import { GithubIcon, LinkedinIcon } from './SocialIcons'
+
+const LINKS = [
+  { icon: Mail, label: 'Email', value: 'hello@beepeelabs.com', href: 'mailto:hello@beepeelabs.com' },
+  { icon: Globe, label: 'Portfolio', value: 'beepeethebrand.netlify.app', href: 'https://beepeethebrand.netlify.app' },
+  { icon: GithubIcon, label: 'GitHub', value: 'github.com/beepeelabs', href: 'https://github.com/beepeelabs' },
+  { icon: LinkedinIcon, label: 'LinkedIn', value: 'linkedin.com/in/feranmibakare', href: 'https://linkedin.com/in/feranmibakare' },
+]
+
+export default function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', project: '' })
+  const [sent, setSent] = useState(false)
+
+  const handleSend = () => {
+    setSent(true)
+    setTimeout(() => setSent(false), 3000)
+  }
+
+  return (
+    <section id="contact" className="border-b-2 border-ink px-5 md:px-10 py-16 md:py-24">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="font-mono text-xs uppercase tracking-widest text-blue mb-3">05 / Contact</div>
+          <h2 className="font-display text-4xl md:text-5xl leading-[0.95] mb-6">
+            Let's build<br />something.
+          </h2>
+          <p className="text-ink-soft leading-relaxed mb-8 max-w-sm">
+            Open to software engineering contracts, technical writing gigs, SEO
+            projects, and long-term collaborations. I work with clients globally —
+            remotely or in Lagos — and invoice in USD.
+          </p>
+
+          <div className="flex flex-col border-2 border-ink">
+            {LINKS.map((l, i) => {
+              const Icon = l.icon
+              return (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target={l.href.startsWith('http') ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className={`flex items-center gap-3 px-4 py-3.5 hover:bg-yellow transition-colors ${
+                    i !== LINKS.length - 1 ? 'border-b border-ink' : ''
+                  }`}
+                >
+                  <Icon size={16} className="text-blue shrink-0" />
+                  <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted w-16 shrink-0">
+                    {l.label}
+                  </span>
+                  <span className="font-mono text-sm truncate">{l.value}</span>
+                </a>
+              )
+            })}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="border-2 border-ink p-6 md:p-7 self-start"
+        >
+          <div className="flex flex-col gap-5">
+            <label className="flex flex-col gap-1.5">
+              <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">Name</span>
+              <input
+                type="text"
+                placeholder="Your name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="border-2 border-ink bg-paper px-3 py-2.5 font-body text-sm focus:outline-none focus:bg-yellow/20"
+              />
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">Email</span>
+              <input
+                type="email"
+                placeholder="you@company.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="border-2 border-ink bg-paper px-3 py-2.5 font-body text-sm focus:outline-none focus:bg-yellow/20"
+              />
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">
+                What are you building?
+              </span>
+              <textarea
+                rows={4}
+                placeholder="Tell me about your project..."
+                value={form.project}
+                onChange={(e) => setForm({ ...form, project: e.target.value })}
+                className="border-2 border-ink bg-paper px-3 py-2.5 font-body text-sm resize-none focus:outline-none focus:bg-yellow/20"
+              />
+            </label>
+            <motion.button
+              onClick={handleSend}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-ink text-paper font-mono text-sm uppercase tracking-wider hover:bg-blue transition-colors"
+            >
+              {sent ? 'Message sent' : 'Send message'}
+              <Send size={15} />
+            </motion.button>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}

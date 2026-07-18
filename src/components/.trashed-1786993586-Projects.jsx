@@ -1,0 +1,65 @@
+import { motion } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
+import { PROJECTS } from '../data/projects'
+
+const reveal = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.2, 0.6, 0.2, 1] } },
+}
+
+export default function Projects({ onOpen }) {
+  return (
+    <section id="projects" className="border-b-2 border-ink px-5 md:px-10 py-16 md:py-24">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-end justify-between mb-10 md:mb-14 gap-4 flex-wrap">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-widest text-blue mb-3">03 / Projects</div>
+            <h2 className="font-display text-4xl md:text-5xl mb-3">Things I have shipped</h2>
+            <p className="text-ink-soft max-w-md">A selection of products I have designed and built, end to end.</p>
+          </div>
+        </div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+          className="grid md:grid-cols-2 gap-5"
+        >
+          {PROJECTS.map((p, i) => (
+            <motion.button
+              key={p.id}
+              variants={reveal}
+              onClick={() => onOpen(p.id)}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="ticket-edge text-left border-2 border-ink p-6 bg-paper hover:bg-yellow group relative overflow-hidden"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-blue">
+                  RT-{String(i + 1).padStart(2, '0')} &middot; {p.type}
+                </span>
+                <ArrowUpRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </div>
+              <div className="font-display text-2xl mb-2">{p.name}</div>
+              <p className="text-sm text-ink-soft leading-relaxed mb-4">{p.desc}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {p.stack.map((t) => (
+                  <span
+                    key={t}
+                    className="font-mono text-[0.65rem] uppercase tracking-wide px-2 py-1 border border-ink text-ink-soft"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </motion.button>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
