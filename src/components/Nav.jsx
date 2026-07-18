@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import navLogo from '../assets/nav-logo.png'
 
 const LINKS = [
   { href: '#about', label: 'About' },
@@ -37,14 +36,6 @@ export default function Nav() {
         onClick={(e) => handleLink(e, '#home')}
         className="flex items-center gap-2.5"
       >
-        <span
-          className={`flex items-center justify-center w-9 h-9 border-2 ${
-            scrolled ? 'border-yellow' : 'border-ink'
-          }`}
-          style={{ background: 'var(--color-yellow)' }}
-        >
-          <img src={navLogo} alt="" className="w-6 h-6 object-contain" />
-        </span>
         <span
           className={`font-display text-lg tracking-wide ${
             scrolled ? 'text-paper' : 'text-ink'
