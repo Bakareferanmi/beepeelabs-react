@@ -1,6 +1,5 @@
 import { Mail } from 'lucide-react'
 import { XIcon, InstagramIcon, FacebookIcon, GithubIcon } from './SocialIcons'
-import footerLogo from '../assets/footer-logo.png'
 
 const SOCIALS = [
   { icon: XIcon, href: 'https://x.com/bakarepheranmi', label: 'X' },
@@ -13,7 +12,7 @@ const SOCIALS = [
 export default function Footer() {
   return (
     <footer className="bg-ink text-paper px-5 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-      <img src={footerLogo} alt="BeepeeLabs" className="w-8 h-8 object-contain" />
+      <div className="font-mono text-xs text-muted-inverse">&copy; 2026 Bakare Oluwaferanmi. All rights reserved.</div>
       <div className="flex items-center gap-4">
         {SOCIALS.map((s) => {
           const Icon = s.icon
@@ -31,7 +30,6 @@ export default function Footer() {
           )
         })}
       </div>
-      <div className="font-mono text-xs text-muted">&copy; 2026 Bakare Oluwaferanmi. All rights reserved.</div>
     </footer>
   )
 }
