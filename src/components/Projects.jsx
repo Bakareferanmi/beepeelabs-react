@@ -31,9 +31,9 @@ export default function Projects({ onOpen }) {
               key={p.id}
               variants={reveal}
               onClick={() => onOpen(p.id)}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.2 }}
-              className="ticket-edge text-left border-2 border-ink bg-paper hover:bg-yellow group relative overflow-hidden"
+              whileHover={{ y: -6, rotate: -0.5 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="ticket-edge text-left border-2 border-ink bg-paper hover:bg-yellow group relative overflow-hidden transition-shadow duration-300 hover:shadow-[6px_6px_0_#FFC22E]"
             >
               <div className="aspect-[16/10] w-full border-b-2 border-ink bg-ink-soft relative overflow-hidden flex items-center justify-center">
                 <span className="font-display text-6xl text-paper/25 select-none">{p.initials}</span>
@@ -71,4 +71,3 @@ export default function Projects({ onOpen }) {
     </section>
   )
 }
-

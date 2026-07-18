@@ -22,7 +22,12 @@ export default function Hero() {
           >
             <motion.div
               className="w-full h-full [transform-style:preserve-3d]"
-              animate={{ rotateY: flipped ? 180 : 0 }}
+              animate={{
+                rotateY: flipped ? 180 : 0,
+                filter: flipped
+                  ? 'drop-shadow(-6px 6px 0 rgba(20,18,14,0.25))'
+                  : 'drop-shadow(6px 6px 0 rgba(20,18,14,0.25))',
+              }}
               transition={{ duration: 0.6, ease: [0.2, 0.6, 0.2, 1] }}
             >
               <img
@@ -45,7 +50,7 @@ export default function Hero() {
             transition={{ delay: 0.15, duration: 0.4 }}
             className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest border-2 border-ink px-3 py-1.5 bg-yellow"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-green" />
+            <span className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" />
             Available for work
           </motion.div>
         </div>

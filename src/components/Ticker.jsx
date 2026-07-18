@@ -7,12 +7,12 @@ const ITEMS = [
 
 export default function Ticker() {
   return (
-    <div className="bg-ink border-b-2 border-ink py-3 px-5 md:px-10">
-      <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
+    <div className="bg-ink border-y-2 border-yellow py-3 px-5 md:px-10">
+      <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 -skew-x-3">
         {ITEMS.map((item) => (
           <span
             key={item}
-            className="font-mono text-[0.65rem] md:text-xs tracking-widest text-yellow border border-yellow/40 px-3 py-1.5"
+            className="font-mono text-[0.65rem] md:text-xs tracking-widest text-yellow border border-yellow/40 px-3 py-1.5 skew-x-3 transition-colors hover:bg-yellow hover:text-ink"
           >
             {item}
           </span>
