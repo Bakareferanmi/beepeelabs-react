@@ -31,6 +31,13 @@ export default function ProjectModal({ projectId, onClose }) {
               <X size={16} />
             </button>
 
+            <div className="aspect-[16/9] w-full border-b-2 border-ink bg-ink-soft relative overflow-hidden flex items-center justify-center">
+              <span className="font-display text-7xl text-paper/25 select-none">{project.initials}</span>
+              <span className="absolute top-3 left-4 font-mono text-[0.6rem] uppercase tracking-widest text-paper/60">
+                Preview
+              </span>
+            </div>
+
             <div className="p-6 md:p-8">
               <div className="font-mono text-xs uppercase tracking-widest text-blue mb-2">{project.type}</div>
               <h3 className="font-display text-3xl md:text-4xl mb-4">{project.name}</h3>
@@ -80,3 +87,5 @@ export default function ProjectModal({ projectId, onClose }) {
     </AnimatePresence>
   )
 }
+
+

@@ -3,6 +3,7 @@ export const PROJECTS = [
     id: 'evvee',
     type: 'Marketplace',
     name: 'Evvee',
+    initials: 'EV',
     desc: 'Nigerian event vendor marketplace. WhatsApp-first contact model with vendor profiles, reviews, a blog, and a fully functional listing dashboard.',
     summary: 'A Nigerian event vendor marketplace built around how people actually book vendors here — over WhatsApp. Evvee gives vendors a real storefront and gives clients a fast way to compare, browse, and reach out.',
     features: [
@@ -19,6 +20,7 @@ export const PROJECTS = [
     id: 'tootorlee',
     type: 'SaaS Tool',
     name: 'Tootorlee',
+    initials: 'TL',
     desc: 'Open-source AI study tool for students and teachers. Features chat history persistence, markdown rendering, and a smooth typing animation. Built with the Anthropic API.',
     summary: 'An AI-powered study assistant built for students and teachers who need a faster way to turn source material into something they can actually study from.',
     features: [
@@ -35,6 +37,7 @@ export const PROJECTS = [
     id: 'isebe',
     type: 'E-commerce',
     name: 'Isebe',
+    initials: 'IS',
     desc: 'Lagos food brand storefront with a Supabase backend, admin panel, blog system, and image carousel. Production-grade architecture with clean, maintainable code.',
     summary: 'A storefront and content platform for a Lagos food brand, rebuilt on a production-grade backend so the client could manage everything themselves without calling a developer every time.',
     features: [
@@ -51,6 +54,7 @@ export const PROJECTS = [
     id: 'beelvoice',
     type: 'Finance Tool',
     name: 'Beelvoice',
+    initials: 'BV',
     desc: 'Professional invoicing app for Nigerian freelancers. Auto-incrementing invoice numbers, light/dark mode, PDF export, and full SEO optimization.',
     summary: 'A professional invoicing app built for Nigerian freelancers who needed something quicker and cleaner than juggling spreadsheets and Word templates.',
     features: [
@@ -66,6 +70,7 @@ export const PROJECTS = [
     id: 'jhay-atelier',
     type: 'Fashion Brand',
     name: 'Jhay Atelier',
+    initials: 'JA',
     desc: 'Bespoke couture brand website with a Firebase Realtime Database backend, Cloudinary image uploads, admin dashboard, and SEO meta tags.',
     summary: 'A bespoke couture brand site for a Lagos-based designer, built to feel as considered as the clothes — with a lightweight admin system the designer can run without touching code.',
     features: [
@@ -81,6 +86,7 @@ export const PROJECTS = [
     id: 'hairehaven',
     type: 'E-commerce',
     name: 'Hairehaven',
+    initials: 'HH',
     desc: 'A storefront for hair stylists to showcase and sell their products and services online. Built for a smooth browsing and checkout experience.',
     summary: 'An online store built for hair stylists to showcase their work and sell products and services directly to clients.',
     features: [

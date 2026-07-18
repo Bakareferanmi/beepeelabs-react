@@ -33,8 +33,15 @@ export default function Projects({ onOpen }) {
               onClick={() => onOpen(p.id)}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.2 }}
-              className="ticket-edge text-left border-2 border-ink p-6 bg-paper hover:bg-yellow group relative overflow-hidden"
+              className="ticket-edge text-left border-2 border-ink bg-paper hover:bg-yellow group relative overflow-hidden"
             >
+              <div className="aspect-[16/10] w-full border-b-2 border-ink bg-ink-soft relative overflow-hidden flex items-center justify-center">
+                <span className="font-display text-6xl text-paper/25 select-none">{p.initials}</span>
+                <span className="absolute top-2.5 left-2.5 font-mono text-[0.6rem] uppercase tracking-widest text-paper/60">
+                  Preview
+                </span>
+              </div>
+              <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <span className="font-mono text-xs uppercase tracking-widest text-blue">
                   RT-{String(i + 1).padStart(2, '0')} &middot; {p.type}
@@ -56,6 +63,7 @@ export default function Projects({ onOpen }) {
                   </span>
                 ))}
               </div>
+              </div>
             </motion.button>
           ))}
         </motion.div>
@@ -63,3 +71,4 @@ export default function Projects({ onOpen }) {
     </section>
   )
 }
+
