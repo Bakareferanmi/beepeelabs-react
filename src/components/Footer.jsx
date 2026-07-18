@@ -9,10 +9,18 @@ const SOCIALS = [
   { icon: Mail, href: 'mailto:hello@beepeelabs.com', label: 'Email' },
 ]
 
-export default function Footer() {
+export default function Footer({ onOpenPrivacy }) {
   return (
     <footer className="bg-ink text-paper px-5 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div className="font-mono text-xs text-muted-inverse">&copy; 2026 Bakare Oluwaferanmi. All rights reserved.</div>
+      <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+        <div className="font-mono text-xs text-muted-inverse">&copy; 2026 Bakare Oluwaferanmi. All rights reserved.</div>
+        <button
+          onClick={onOpenPrivacy}
+          className="font-mono text-xs text-muted-inverse hover:text-yellow underline underline-offset-2 transition-colors"
+        >
+          Privacy Policy
+        </button>
+      </div>
       <div className="flex items-center gap-4">
         {SOCIALS.map((s) => {
           const Icon = s.icon

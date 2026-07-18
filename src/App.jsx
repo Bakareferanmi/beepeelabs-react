@@ -11,10 +11,12 @@ import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
+import PrivacyModal from './components/PrivacyModal'
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null)
   const [activePost, setActivePost] = useState(null)
+  const [privacyOpen, setPrivacyOpen] = useState(false)
 
   const openProject = (id) => {
     window.history.pushState({ modal: true }, '')
@@ -26,12 +28,18 @@ export default function App() {
     setActivePost(id)
   }
 
+  const openPrivacy = () => {
+    window.history.pushState({ modal: true }, '')
+    setPrivacyOpen(true)
+  }
+
   const closeModal = () => {
     if (window.history.state && window.history.state.modal) {
       window.history.back()
     } else {
       setActiveProject(null)
       setActivePost(null)
+      setPrivacyOpen(false)
     }
   }
 
@@ -39,6 +47,7 @@ export default function App() {
     const onPopState = () => {
       setActiveProject(null)
       setActivePost(null)
+      setPrivacyOpen(false)
     }
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
@@ -55,8 +64,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = activeProject || activePost ? 'hidden' : ''
-  }, [activeProject, activePost])
+    document.body.style.overflow = activeProject || activePost || privacyOpen ? 'hidden' : ''
+  }, [activeProject, activePost, privacyOpen])
 
   return (
     <div className="min-h-screen">
@@ -68,10 +77,11 @@ export default function App() {
       <Projects onOpen={openProject} />
       <Writing onOpen={openPost} />
       <Contact />
-      <Footer />
+      <Footer onOpenPrivacy={openPrivacy} />
       <WhatsAppButton />
       <ProjectModal projectId={activeProject} onClose={closeModal} />
       <BlogModal postId={activePost} onClose={closeModal} />
+      <PrivacyModal open={privacyOpen} onClose={closeModal} />
     </div>
   )
 }
