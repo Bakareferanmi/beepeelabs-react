@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import Nav from './components/Nav'
 import Ticker from './components/Ticker'
 import Hero from './components/Hero'
@@ -12,11 +13,14 @@ import WhatsAppButton from './components/WhatsAppButton'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
 import PrivacyModal from './components/PrivacyModal'
+import TrafficLight from './components/TrafficLight'
+import LoadingScreen from './components/LoadingScreen'
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null)
   const [activePost, setActivePost] = useState(null)
   const [privacyOpen, setPrivacyOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const openProject = (id) => {
     window.history.pushState({ modal: true }, '')
@@ -67,8 +71,16 @@ export default function App() {
     document.body.style.overflow = activeProject || activePost || privacyOpen ? 'hidden' : ''
   }, [activeProject, activePost, privacyOpen])
 
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div className="min-h-screen">
+      <AnimatePresence>
+        {loading && <LoadingScreen />}
+      </AnimatePresence>
       <Nav />
       <Ticker />
       <Hero />
@@ -79,6 +91,7 @@ export default function App() {
       <Contact />
       <Footer onOpenPrivacy={openPrivacy} />
       <WhatsAppButton />
+      <TrafficLight />
       <ProjectModal projectId={activeProject} onClose={closeModal} />
       <BlogModal postId={activePost} onClose={closeModal} />
       <PrivacyModal open={privacyOpen} onClose={closeModal} />
