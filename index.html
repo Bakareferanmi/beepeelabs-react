@@ -89,31 +89,6 @@
 </head>
 <body>
 <div id="root"></div>
-<script>
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const vw = window.innerWidth
-      let worst = null
-      let worstOverflow = 0
-      document.querySelectorAll('*').forEach((el) => {
-        const rect = el.getBoundingClientRect()
-        const overflow = rect.right - vw
-        if (overflow > worstOverflow) {
-          worstOverflow = overflow
-          worst = el
-        }
-      })
-      const banner = document.createElement('div')
-      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:red;color:white;font-family:monospace;font-size:12px;padding:8px;word-break:break-all;'
-      if (worst) {
-        banner.textContent = `OVERFLOW ${Math.round(worstOverflow)}px — TAG: ${worst.tagName} CLASS: ${worst.className}`
-      } else {
-        banner.textContent = 'No overflow found'
-      }
-      document.body.appendChild(banner)
-    }, 1500)
-  })
-</script>
 <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
