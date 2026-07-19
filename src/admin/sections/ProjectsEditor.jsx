@@ -4,7 +4,7 @@ import { db } from '../../firebase'
 
 const EMPTY = {
   id: '', type: '', name: '', initials: '', desc: '', summary: '',
-  features: [], stack: [], link: '',
+  features: [], stack: [], link: '', image: '',
 }
 
 export default function ProjectsEditor() {
@@ -12,6 +12,7 @@ export default function ProjectsEditor() {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(null)
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
   const load = async () => {
     setLoading(true)
@@ -35,6 +36,31 @@ export default function ProjectsEditor() {
     if (!confirm(`Delete project "${id}"? This cannot be undone.`)) return
     await deleteDoc(doc(db, 'projects', id))
     load()
+  }
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('upload_preset', 'Beepeelabs')
+      const res = await fetch('https://api.cloudinary.com/v1_1/jhayatelier/image/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (data.secure_url) {
+        setEditing((prev) => ({ ...prev, image: data.secure_url }))
+      } else {
+        alert('Upload failed. Check your Cloudinary preset settings.')
+      }
+    } catch (err) {
+      alert('Upload failed: ' + err.message)
+    } finally {
+      setUploading(false)
+    }
   }
 
   if (loading) return <p className="text-ink-soft">Loading...</p>
@@ -82,6 +108,20 @@ export default function ProjectsEditor() {
             onChange={(e) => setEditing({ ...editing, initials: e.target.value })}
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm focus:outline-none focus:bg-yellow/20"
           />
+        </label>
+
+        <label className="flex flex-col gap-1.5">
+          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">Project image</span>
+          {editing.image && (
+            <img src={editing.image} alt="Preview" className="w-full aspect-[16/10] object-cover border-2 border-ink mb-1" />
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="border-2 border-ink bg-paper px-3 py-2.5 text-sm file:mr-3 file:border-2 file:border-ink file:bg-yellow file:px-3 file:py-1.5 file:font-mono file:text-xs file:uppercase"
+          />
+          {uploading && <span className="font-mono text-xs text-blue">Uploading...</span>}
         </label>
 
         <label className="flex flex-col gap-1.5">

@@ -55,7 +55,11 @@ export default function Projects({ projects, loading, onOpen }) {
                 className="ticket-edge text-left border-2 border-ink bg-paper hover:bg-yellow group relative overflow-hidden transition-shadow duration-300 hover:shadow-[6px_6px_0_#FFC22E]"
               >
                 <div className="aspect-[16/10] w-full border-b-2 border-ink bg-ink-soft relative overflow-hidden flex items-center justify-center">
-                  <span className="font-display text-6xl text-paper/25 select-none">{p.initials}</span>
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="font-display text-6xl text-paper/25 select-none">{p.initials}</span>
+                  )}
                   <span className="absolute top-2.5 left-2.5 font-mono text-[0.6rem] uppercase tracking-widest text-paper/60">
                     Preview
                   </span>

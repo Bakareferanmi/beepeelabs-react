@@ -31,7 +31,11 @@ export default function ProjectModal({ projectId, projects, onClose }) {
             </button>
 
             <div className="aspect-[16/9] w-full border-b-2 border-ink bg-ink-soft relative overflow-hidden flex items-center justify-center">
-              <span className="font-display text-7xl text-paper/25 select-none">{project.initials}</span>
+              {project.image ? (
+                <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
+              ) : (
+                <span className="font-display text-7xl text-paper/25 select-none">{project.initials}</span>
+              )}
               <span className="absolute top-3 left-4 font-mono text-[0.6rem] uppercase tracking-widest text-paper/60">
                 Preview
               </span>
