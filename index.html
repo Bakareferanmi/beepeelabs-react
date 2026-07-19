@@ -89,6 +89,26 @@
 </head>
 <body>
 <div id="root"></div>
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const root = document.getElementById('root')
+      const rootStyle = getComputedStyle(root)
+      const info = [
+        `innerWidth: ${window.innerWidth}`,
+        `docEl.scrollWidth: ${document.documentElement.scrollWidth}`,
+        `body.scrollWidth: ${document.body.scrollWidth}`,
+        `root.scrollWidth: ${root.scrollWidth}`,
+        `root computed width: ${rootStyle.width}`,
+        `root.getBoundingClientRect: ${JSON.stringify(root.getBoundingClientRect())}`,
+      ]
+      const banner = document.createElement('div')
+      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:red;color:white;font-family:monospace;font-size:10px;padding:8px;word-break:break-all;line-height:1.5;'
+      banner.textContent = info.join(' | ')
+      document.body.appendChild(banner)
+    }, 1500)
+  })
+</script>
 <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
