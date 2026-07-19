@@ -43,7 +43,7 @@ export default function About() {
 
   return (
     <section id="about" className="border-b-2 border-ink px-5 md:px-10 py-16 md:py-24">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

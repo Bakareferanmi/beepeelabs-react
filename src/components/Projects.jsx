@@ -33,7 +33,7 @@ export default function Projects({ projects, loading, onOpen }) {
         </div>
 
         {loading ? (
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <SkeletonCard />
             <SkeletonCard />
           </div>
@@ -43,7 +43,7 @@ export default function Projects({ projects, loading, onOpen }) {
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
             variants={{ show: { transition: { staggerChildren: 0.08 } } }}
-            className="grid md:grid-cols-2 gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
           >
             {projects.map((p, i) => (
               <motion.button
