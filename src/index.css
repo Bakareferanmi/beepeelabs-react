@@ -8,6 +8,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -50,7 +51,6 @@ body::before {
   font-family: "Space Mono", monospace;
 }
 
-/* Perforated ticket edge used on cards */
 .ticket-edge {
   position: relative;
 }
