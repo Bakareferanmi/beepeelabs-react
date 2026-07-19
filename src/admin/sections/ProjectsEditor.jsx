@@ -25,8 +25,11 @@ export default function ProjectsEditor() {
 
   const handleSave = async () => {
     if (!editing.id) return alert('ID is required (e.g. "my-project", no spaces)')
+    const cleanLink = editing.link && !editing.link.startsWith('http')
+      ? `https://${editing.link}`
+      : editing.link
     setSaving(true)
-    await setDoc(doc(db, 'projects', editing.id), editing)
+    await setDoc(doc(db, 'projects', editing.id), { ...editing, link: cleanLink })
     setSaving(false)
     setEditing(null)
     load()
@@ -230,3 +233,4 @@ export default function ProjectsEditor() {
     </div>
   )
 }
+

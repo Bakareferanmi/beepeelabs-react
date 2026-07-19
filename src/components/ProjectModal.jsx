@@ -71,7 +71,7 @@ export default function ProjectModal({ projectId, projects, onClose }) {
 
               {project.link ? (
                 <a
-                  href={project.link}
+                  href={project.link.startsWith('http') ? project.link : `https://${project.link}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-3 bg-ink text-paper font-mono text-sm uppercase tracking-wider hover:bg-blue transition-colors"
