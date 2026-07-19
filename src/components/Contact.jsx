@@ -96,7 +96,7 @@ export default function Contact() {
                   <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted w-16 shrink-0">
                     {l.label}
                   </span>
-                  <span className="font-mono text-sm truncate">{l.value}</span>
+                  <span className="font-mono text-sm truncate min-w-0 flex-1">{l.value}</span>
                 </a>
               )
             })}
@@ -158,3 +158,4 @@ export default function Contact() {
     </section>
   )
 }
+
