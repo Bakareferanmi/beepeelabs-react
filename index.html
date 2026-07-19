@@ -89,25 +89,6 @@
 </head>
 <body>
 <div id="root"></div>
-<script>
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const vw = window.innerWidth
-      const results = []
-      function walk(el, depth) {
-        if (el.scrollWidth > vw) {
-          results.push(`${'  '.repeat(depth)}<${el.tagName} class="${el.className}"> scrollWidth=${el.scrollWidth}`)
-        }
-        Array.from(el.children).forEach((child) => walk(child, depth + 1))
-      }
-      walk(document.getElementById('root'), 0)
-      const banner = document.createElement('div')
-      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:red;color:white;font-family:monospace;font-size:9px;padding:8px;word-break:break-all;line-height:1.6;max-height:100vh;overflow-y:auto;'
-      banner.textContent = results.join(' || ')
-      document.body.appendChild(banner)
-    }, 1500)
-  })
-</script>
 <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
