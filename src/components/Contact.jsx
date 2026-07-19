@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import * as Icons from 'lucide-react'
-import { Send } from 'lucide-react'
+import { Mail, Github, Linkedin, Send } from 'lucide-react'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+
+const ICON_MAP = { Mail, Github, Linkedin }
 
 const DEFAULT_CONTACT = {
   eyebrow: '05 / Contact',
@@ -11,7 +12,6 @@ const DEFAULT_CONTACT = {
   body: 'Open to software engineering contracts, technical writing gigs, SEO projects, and long-term collaborations. I work with clients globally — remotely or in Lagos — and invoice in USD.',
   links: [
     { icon: 'Mail', label: 'Email', value: 'hello@beepeelabs.com', href: 'mailto:hello@beepeelabs.com' },
-    { icon: 'Globe', label: 'Portfolio', value: 'beepeethebrand.netlify.app', href: 'https://beepeethebrand.netlify.app' },
     { icon: 'Github', label: 'GitHub', value: 'github.com/Bakareferanmi', href: 'https://github.com/Bakareferanmi' },
     { icon: 'Linkedin', label: 'LinkedIn', value: 'linkedin.com/in/bakare-feranmi-313357139', href: 'https://www.linkedin.com/in/bakare-feranmi-313357139' },
   ],
@@ -81,7 +81,7 @@ export default function Contact() {
 
           <div className="flex flex-col border-2 border-ink">
             {contact.links.map((l, i) => {
-              const Icon = Icons[l.icon] || Icons.Mail
+              const Icon = ICON_MAP[l.icon] || Mail
               return (
                 <a
                   key={l.label}
