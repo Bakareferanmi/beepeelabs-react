@@ -1,13 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../firebase'
 import avatarFront from '../assets/avatar-front.jpg'
 import avatarBack from '../assets/avatar-back.jpg'
 
-const headlineWords = ['I', 'build', 'interfaces', 'that', 'actually', 'work']
-
 export default function Hero() {
   const [flipped, setFlipped] = useState(false)
+  const [hero, setHero] = useState({
+    headline: 'I build interfaces that actually work',
+    subtext: 'Software engineer, technical writer, and SEO strategist. I turn complex problems into clean, performant web products. Based in Lagos — available remotely.',
+    availableForWork: true,
+  })
+
+  useEffect(() => {
+    async function fetchHero() {
+      try {
+        const snap = await getDoc(doc(db, 'content', 'hero'))
+        if (snap.exists()) setHero(snap.data())
+      } catch (err) {
+        console.error('Failed to load hero content:', err)
+      }
+    }
+    fetchHero()
+  }, [])
+
+  const headlineWords = hero.headline.split(' ')
 
   return (
     <section id="home" className="border-b-2 border-ink px-5 md:px-10 pt-14 pb-16 md:pt-20 md:pb-24">
@@ -44,15 +63,17 @@ export default function Hero() {
             </motion.div>
           </motion.button>
 
-          <motion.div
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.15, duration: 0.4 }}
-            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest border-2 border-ink px-3 py-1.5 bg-yellow"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" />
-            Available for work
-          </motion.div>
+          {hero.availableForWork && (
+            <motion.div
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.15, duration: 0.4 }}
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest border-2 border-ink px-3 py-1.5 bg-yellow"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" />
+              Available for work
+            </motion.div>
+          )}
         </div>
 
         <h1 className="font-display text-[13vw] leading-[0.92] md:text-[6.2rem] md:leading-[0.9] mb-8 max-w-4xl">
@@ -76,9 +97,7 @@ export default function Hero() {
           transition={{ delay: 0.6, duration: 0.5 }}
           className="text-lg md:text-xl text-ink-soft max-w-xl mb-9 leading-relaxed"
         >
-          Software engineer, technical writer, and SEO strategist. I turn complex
-          problems into clean, performant web products. Based in Lagos — available
-          remotely.
+          {hero.subtext}
         </motion.p>
 
         <motion.div
