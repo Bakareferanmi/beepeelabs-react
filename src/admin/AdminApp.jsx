@@ -2,10 +2,26 @@ import { useState, useEffect } from 'react'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import AdminLogin from './AdminLogin'
+import HeroEditor from './sections/HeroEditor'
+import AboutEditor from './sections/AboutEditor'
+import SkillsEditor from './sections/SkillsEditor'
+import ProjectsEditor from './sections/ProjectsEditor'
+import WritingEditor from './sections/WritingEditor'
+import ContactEditor from './sections/ContactEditor'
+
+const TABS = [
+  { id: 'hero', label: 'Hero' },
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'writing', label: 'Writing' },
+  { id: 'contact', label: 'Contact' },
+]
 
 export default function AdminApp() {
   const [user, setUser] = useState(null)
   const [checking, setChecking] = useState(true)
+  const [activeTab, setActiveTab] = useState('hero')
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
@@ -38,8 +54,28 @@ export default function AdminApp() {
           Sign out
         </button>
       </div>
-      <div className="px-5 md:px-10 py-10">
-        <p className="text-ink-soft">Dashboard sections coming next.</p>
+
+      <div className="flex overflow-x-auto border-b-2 border-ink">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`px-4 py-3 font-mono text-xs uppercase tracking-widest whitespace-nowrap border-r-2 border-ink ${
+              activeTab === tab.id ? 'bg-yellow' : 'hover:bg-yellow/30'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="px-5 md:px-10 py-8 max-w-2xl">
+        {activeTab === 'hero' && <HeroEditor />}
+        {activeTab === 'about' && <AboutEditor />}
+        {activeTab === 'skills' && <SkillsEditor />}
+        {activeTab === 'projects' && <ProjectsEditor />}
+        {activeTab === 'writing' && <WritingEditor />}
+        {activeTab === 'contact' && <ContactEditor />}
       </div>
     </div>
   )
