@@ -1,9 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
-import { BLOG_POSTS } from '../data/blogPosts'
 
-export default function BlogModal({ postId, onClose }) {
-  const post = BLOG_POSTS.find((p) => p.id === postId)
+export default function BlogModal({ postId, posts, onClose }) {
+  const post = posts.find((p) => p.id === postId)
 
   return (
     <AnimatePresence>

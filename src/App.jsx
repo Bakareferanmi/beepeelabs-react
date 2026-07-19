@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from './firebase'
 import Nav from './components/Nav'
 import Ticker from './components/Ticker'
 import Hero from './components/Hero'
@@ -21,6 +23,10 @@ export default function App() {
   const [activePost, setActivePost] = useState(null)
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [loading, setLoading] = useState(true)
+
+  const [projects, setProjects] = useState([])
+  const [writing, setWriting] = useState([])
+  const [dataLoading, setDataLoading] = useState(true)
 
   const openProject = (id) => {
     window.history.pushState({ modal: true }, '')
@@ -76,6 +82,24 @@ export default function App() {
     return () => clearTimeout(timer)
   }, [])
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [projectsSnap, writingSnap] = await Promise.all([
+          getDocs(collection(db, 'projects')),
+          getDocs(collection(db, 'writing')),
+        ])
+        setProjects(projectsSnap.docs.map((d) => d.data()))
+        setWriting(writingSnap.docs.map((d) => d.data()))
+      } catch (err) {
+        console.error('Failed to load content:', err)
+      } finally {
+        setDataLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
   return (
     <div className="min-h-screen">
       <AnimatePresence>
@@ -86,14 +110,14 @@ export default function App() {
       <Hero />
       <About />
       <Skills />
-      <Projects onOpen={openProject} />
-      <Writing onOpen={openPost} />
+      <Projects projects={projects} loading={dataLoading} onOpen={openProject} />
+      <Writing posts={writing} loading={dataLoading} onOpen={openPost} />
       <Contact />
       <Footer onOpenPrivacy={openPrivacy} />
       <WhatsAppButton />
       <TrafficLight />
-      <ProjectModal projectId={activeProject} onClose={closeModal} />
-      <BlogModal postId={activePost} onClose={closeModal} />
+      <ProjectModal projectId={activeProject} projects={projects} onClose={closeModal} />
+      <BlogModal postId={activePost} posts={writing} onClose={closeModal} />
       <PrivacyModal open={privacyOpen} onClose={closeModal} />
     </div>
   )

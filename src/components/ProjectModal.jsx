@@ -1,9 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { X, ArrowUpRight } from 'lucide-react'
-import { PROJECTS } from '../data/projects'
 
-export default function ProjectModal({ projectId, onClose }) {
-  const project = PROJECTS.find((p) => p.id === projectId)
+export default function ProjectModal({ projectId, projects, onClose }) {
+  const project = projects.find((p) => p.id === projectId)
 
   return (
     <AnimatePresence>
@@ -87,5 +86,3 @@ export default function ProjectModal({ projectId, onClose }) {
     </AnimatePresence>
   )
 }
-
-
