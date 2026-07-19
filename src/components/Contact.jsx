@@ -1,18 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Globe, Send } from 'lucide-react'
-import { GithubIcon, LinkedinIcon } from './SocialIcons'
+import * as Icons from 'lucide-react'
+import { Send } from 'lucide-react'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../firebase'
 
-const LINKS = [
-  { icon: Mail, label: 'Email', value: 'hello@beepeelabs.com', href: 'mailto:hello@beepeelabs.com' },
-  { icon: Globe, label: 'Portfolio', value: 'beepeethebrand.netlify.app', href: 'https://beepeethebrand.netlify.app' },
-  { icon: GithubIcon, label: 'GitHub', value: 'github.com/beepeelabs', href: 'https://github.com/beepeelabs' },
-  { icon: LinkedinIcon, label: 'LinkedIn', value: 'linkedin.com/in/feranmibakare', href: 'https://linkedin.com/in/feranmibakare' },
-]
+const DEFAULT_CONTACT = {
+  eyebrow: '05 / Contact',
+  heading: "Let's build\nsomething.",
+  body: 'Open to software engineering contracts, technical writing gigs, SEO projects, and long-term collaborations. I work with clients globally — remotely or in Lagos — and invoice in USD.',
+  links: [
+    { icon: 'Mail', label: 'Email', value: 'hello@beepeelabs.com', href: 'mailto:hello@beepeelabs.com' },
+    { icon: 'Globe', label: 'Portfolio', value: 'beepeethebrand.netlify.app', href: 'https://beepeethebrand.netlify.app' },
+    { icon: 'Github', label: 'GitHub', value: 'github.com/Bakareferanmi', href: 'https://github.com/Bakareferanmi' },
+    { icon: 'Linkedin', label: 'LinkedIn', value: 'linkedin.com/in/bakare-feranmi-313357139', href: 'https://www.linkedin.com/in/bakare-feranmi-313357139' },
+  ],
+}
 
 export default function Contact() {
+  const [contact, setContact] = useState(DEFAULT_CONTACT)
   const [form, setForm] = useState({ name: '', email: '', project: '' })
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const [status, setStatus] = useState('idle')
+
+  useEffect(() => {
+    async function fetchContact() {
+      try {
+        const snap = await getDoc(doc(db, 'content', 'contact'))
+        if (snap.exists()) setContact(snap.data())
+      } catch (err) {
+        console.error('Failed to load contact content:', err)
+      }
+    }
+    fetchContact()
+  }, [])
 
   const handleSend = async () => {
     if (!form.name || !form.email || !form.project) return
@@ -53,19 +73,15 @@ export default function Contact() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.5 }}
         >
-          <div className="font-mono text-xs uppercase tracking-widest text-blue mb-3">05 / Contact</div>
-          <h2 className="font-display text-4xl md:text-5xl leading-[0.95] mb-6">
-            Let's build<br />something.
+          <div className="font-mono text-xs uppercase tracking-widest text-blue mb-3">{contact.eyebrow}</div>
+          <h2 className="font-display text-4xl md:text-5xl leading-[0.95] mb-6 whitespace-pre-line">
+            {contact.heading}
           </h2>
-          <p className="text-ink-soft leading-relaxed mb-8 max-w-sm">
-            Open to software engineering contracts, technical writing gigs, SEO
-            projects, and long-term collaborations. I work with clients globally —
-            remotely or in Lagos — and invoice in USD.
-          </p>
+          <p className="text-ink-soft leading-relaxed mb-8 max-w-sm">{contact.body}</p>
 
           <div className="flex flex-col border-2 border-ink">
-            {LINKS.map((l, i) => {
-              const Icon = l.icon
+            {contact.links.map((l, i) => {
+              const Icon = Icons[l.icon] || Icons.Mail
               return (
                 <a
                   key={l.label}
@@ -73,7 +89,7 @@ export default function Contact() {
                   target={l.href.startsWith('http') ? '_blank' : undefined}
                   rel="noopener noreferrer"
                   className={`flex items-center gap-3 px-4 py-3.5 hover:bg-yellow transition-colors ${
-                    i !== LINKS.length - 1 ? 'border-b border-ink' : ''
+                    i !== contact.links.length - 1 ? 'border-b border-ink' : ''
                   }`}
                 >
                   <Icon size={16} className="text-blue shrink-0" />
