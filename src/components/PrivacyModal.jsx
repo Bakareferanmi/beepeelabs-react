@@ -81,7 +81,7 @@ export default function PrivacyModal({ open, onClose }) {
                   <h4 className="font-display text-lg text-ink mb-1.5">Your rights</h4>
                   <p>
                     You can ask me to delete any information you've sent through the
-                    contact form at any time by emailing hello@beepeelabs.com.
+                    contact form at any time by emailing bakareferanmi96@gmail.com.
                   </p>
                 </div>
 
@@ -89,8 +89,8 @@ export default function PrivacyModal({ open, onClose }) {
                   <h4 className="font-display text-lg text-ink mb-1.5">Contact</h4>
                   <p>
                     Questions about this policy can be sent to{' '}
-                    <a href="mailto:hello@beepeelabs.com" className="text-blue underline">
-                      hello@beepeelabs.com
+                    <a href="mailto:bakareferanmi96@gmail.com" className="text-blue underline">
+                      bakareferanmi96@gmail.com
                     </a>
                     .
                   </p>

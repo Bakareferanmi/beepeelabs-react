@@ -6,7 +6,7 @@ const SOCIALS = [
   { icon: InstagramIcon, href: 'https://instagram.com/bakarepheranmi', label: 'Instagram' },
   { icon: FacebookIcon, href: 'https://facebook.com/Bakare.feranmi', label: 'Facebook' },
   { icon: GithubIcon, href: 'https://github.com/beepeelabs', label: 'GitHub' },
-  { icon: Mail, href: 'mailto:hello@beepeelabs.com', label: 'Email' },
+  { icon: Mail, href: 'mailto:bakareferanmi96@gmail.com', label: 'Email' },
 ]
 
 export default function Footer({ onOpenPrivacy }) {
