@@ -31,7 +31,7 @@ const CONTACT = {
   heading: "Let's build\nsomething.",
   body: 'Open to software engineering contracts, technical writing gigs, SEO projects, and long-term collaborations. I work with clients globally — remotely or in Lagos — and invoice in USD.',
   links: [
-    { Icon: Mail, label: 'Email', value: 'hello@beepeelabs.com', href: 'mailto:hello@beepeelabs.com' },
+    { Icon: Mail, label: 'Email', value: 'bakareferanmi96@gmail.com', href: 'mailto:bakareferanmi96@gmail.com' },
     { Icon: XIcon, label: 'X', value: 'x.com/bakarepheranmi', href: 'https://x.com/bakarepheranmi' },
     { Icon: GithubIcon, label: 'GitHub', value: 'github.com/Bakareferanmi', href: 'https://github.com/Bakareferanmi' },
     { Icon: LinkedinIcon, label: 'LinkedIn', value: 'linkedin.com/in/bakare-feranmi-313357139', href: 'https://www.linkedin.com/in/bakare-feranmi-313357139' },
