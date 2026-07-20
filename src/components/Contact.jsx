@@ -20,7 +20,15 @@ function LinkedinIcon(props) {
   )
 }
 
-const ICON_MAP = { Mail, Github: GithubIcon, Linkedin: LinkedinIcon }
+function XIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  )
+}
+
+const ICON_MAP = { Mail, Github: GithubIcon, Linkedin: LinkedinIcon, Twitter: XIcon }
 
 const DEFAULT_CONTACT = {
   eyebrow: '05 / Contact',
@@ -28,6 +36,7 @@ const DEFAULT_CONTACT = {
   body: 'Open to software engineering contracts, technical writing gigs, SEO projects, and long-term collaborations. I work with clients globally — remotely or in Lagos — and invoice in USD.',
   links: [
     { icon: 'Mail', label: 'Email', value: 'hello@beepeelabs.com', href: 'mailto:hello@beepeelabs.com' },
+    { icon: 'Twitter', label: 'X', value: 'x.com/bakarepheranmi', href: 'https://x.com/bakarepheranmi' },
     { icon: 'Github', label: 'GitHub', value: 'github.com/Bakareferanmi', href: 'https://github.com/Bakareferanmi' },
     { icon: 'Linkedin', label: 'LinkedIn', value: 'linkedin.com/in/bakare-feranmi-313357139', href: 'https://www.linkedin.com/in/bakare-feranmi-313357139' },
   ],
