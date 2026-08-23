@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const { id, debug } = req.query
+  const { id } = req.query
   const host = req.headers['x-forwarded-host'] || req.headers.host
   const proto = req.headers['x-forwarded-proto'] || 'https'
   const siteUrl = `${proto}://${host}`
@@ -15,28 +15,18 @@ export default async function handler(req, res) {
 
   let title = 'BeepeeLabs | Bakare Oluwaferanmi'
   let description = 'Technical writing and developer notes from BeepeeLabs.'
-  let debugInfo = { id, fetchOk: null, fetchStatus: null, fields: null, error: null }
 
   try {
     const fsUrl = `https://firestore.googleapis.com/v1/projects/beepeelabs/databases/(default)/documents/writing/${encodeURIComponent(id)}`
     const fsRes = await fetch(fsUrl)
-    debugInfo.fetchOk = fsRes.ok
-    debugInfo.fetchStatus = fsRes.status
     if (fsRes.ok) {
       const data = await fsRes.json()
       const f = data.fields || {}
-      debugInfo.fields = Object.keys(f)
       if (f.title?.stringValue) title = `${f.title.stringValue} — BeepeeLabs`
       if (f.excerpt?.stringValue) description = f.excerpt.stringValue
     }
-  } catch (err) {
-    debugInfo.error = err.message
-  }
-
-  if (debug) {
-    res.setHeader('Content-Type', 'application/json')
-    res.status(200).json({ ...debugInfo, resolvedTitle: title })
-    return
+  } catch {
+    // fall back to site defaults if Firestore read fails
   }
 
   const escape = (str) =>
