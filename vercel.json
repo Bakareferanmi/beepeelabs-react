@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/writing/:id", "destination": "/api/writing-og" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
