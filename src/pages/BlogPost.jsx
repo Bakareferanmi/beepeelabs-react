@@ -47,7 +47,7 @@ export default function BlogPost({ posts, loading }) {
           <div className="font-mono text-xs uppercase tracking-widest text-blue mb-2">{post.meta}</div>
           <h1 className="font-display text-3xl md:text-4xl leading-tight mb-4">{post.title}</h1>
 
-          <div className="font-mono text-xs text-muted mb-8">
+          <div className="font-mono text-xs text-ink-soft mb-8">
             By {post.author || 'Bakare Feranmi'}
             {post.publishedAt && <> · <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time></>}
             {post.updatedAt && post.updatedAt !== post.publishedAt && (
@@ -57,7 +57,7 @@ export default function BlogPost({ posts, loading }) {
 
           <div className="space-y-4">
             {post.body.map((p, i) => (
-              <p key={i} className="text-sm md:text-base text-ink-soft leading-relaxed">
+              <p key={i} className="text-sm md:text-base text-ink leading-relaxed">
                 {p}
               </p>
             ))}
