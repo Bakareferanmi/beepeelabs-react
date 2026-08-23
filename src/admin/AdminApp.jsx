@@ -8,6 +8,7 @@ import SkillsEditor from './sections/SkillsEditor'
 import ProjectsEditor from './sections/ProjectsEditor'
 import WritingEditor from './sections/WritingEditor'
 import ContactEditor from './sections/ContactEditor'
+import AnalyticsEditor from './sections/AnalyticsEditor'
 
 const TABS = [
   { id: 'hero', label: 'Hero' },
@@ -16,6 +17,7 @@ const TABS = [
   { id: 'projects', label: 'Projects' },
   { id: 'writing', label: 'Writing' },
   { id: 'contact', label: 'Contact' },
+  { id: 'analytics', label: 'Analytics' },
 ]
 
 export default function AdminApp() {
@@ -76,6 +78,7 @@ export default function AdminApp() {
         {activeTab === 'projects' && <ProjectsEditor />}
         {activeTab === 'writing' && <WritingEditor />}
         {activeTab === 'contact' && <ContactEditor />}
+        {activeTab === 'analytics' && <AnalyticsEditor />}
       </div>
     </div>
   )

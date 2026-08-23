@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
+import { trackPageView } from './lib/trackView'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from './firebase'
 import Nav from './components/Nav'
@@ -40,6 +42,7 @@ function Home({ projects, writing, dataLoading, activeProject, openProject, priv
 }
 
 export default function App() {
+  const location = useLocation()
   const [activeProject, setActiveProject] = useState(null)
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -94,6 +97,12 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    if (import.meta.env.PROD) {
+      trackPageView(location.pathname)
+    }
+  }, [location.pathname])
+
+  useEffect(() => {
     async function fetchData() {
       try {
         const [projectsSnap, writingSnap] = await Promise.all([
@@ -113,6 +122,7 @@ export default function App() {
 
   return (
     <>
+      <Analytics />
       <AnimatePresence>
         {loading && <LoadingScreen />}
       </AnimatePresence>
