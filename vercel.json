@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/writing/:id", "destination": "/api/writing-og" },
+    { "source": "/writing/:id", "destination": "/api/writing-og?id=:id" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
