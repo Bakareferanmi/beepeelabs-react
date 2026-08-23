@@ -18,6 +18,7 @@ export default async function handler(req, res) {
   let author = 'Bakare Feranmi'
   let publishedAt = null
   let updatedAt = null
+  let postImage = null
 
   try {
     const fsUrl = `https://firestore.googleapis.com/v1/projects/beepeelabs/databases/(default)/documents/writing/${encodeURIComponent(id)}`
@@ -30,6 +31,7 @@ export default async function handler(req, res) {
       if (f.author?.stringValue) author = f.author.stringValue
       if (f.publishedAt?.stringValue) publishedAt = f.publishedAt.stringValue
       if (f.updatedAt?.stringValue) updatedAt = f.updatedAt.stringValue
+      if (f.image?.stringValue) postImage = f.image.stringValue
     }
   } catch {
     // fall back to site defaults if Firestore read fails
@@ -39,7 +41,7 @@ export default async function handler(req, res) {
     String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
 
   const pageUrl = `${siteUrl}/writing/${id}`
-  const imageUrl = `${siteUrl}/og-image.png`
+  const imageUrl = postImage || `${siteUrl}/og-image.png`
   const t = escape(title)
   const d = escape(description)
   const a = escape(author)

@@ -3,13 +3,14 @@ import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
 
 const AUTHOR_NAME = 'Bakare Feranmi'
-const EMPTY = { id: '', meta: '', title: '', excerpt: '', body: [] }
+const EMPTY = { id: '', meta: '', title: '', excerpt: '', body: [], image: '' }
 
 export default function WritingEditor() {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(null)
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [bodyText, setBodyText] = useState('')
 
   const load = async () => {
@@ -53,6 +54,31 @@ export default function WritingEditor() {
     load()
   }
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('upload_preset', 'Beepeelabs')
+      const res = await fetch('https://api.cloudinary.com/v1_1/jhayatelier/image/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (data.secure_url) {
+        setEditing((prev) => ({ ...prev, image: data.secure_url }))
+      } else {
+        alert('Upload failed. Check your Cloudinary preset settings.')
+      }
+    } catch (err) {
+      alert('Upload failed: ' + err.message)
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const formatDate = (iso) =>
     iso ? new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '—'
 
@@ -80,6 +106,25 @@ export default function WritingEditor() {
           />
           <span className="font-mono text-[0.65rem] text-muted">
             URL preview: /writing/{editing.id.trim().toLowerCase().replace(/\s+/g, '-') || '...'}
+          </span>
+        </label>
+
+        <label className="flex flex-col gap-1.5">
+          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">
+            Cover image (used as header + social share image)
+          </span>
+          {editing.image && (
+            <img src={editing.image} alt="Preview" className="w-full aspect-[1200/630] object-cover border-2 border-ink mb-1" />
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="border-2 border-ink bg-paper px-3 py-2.5 text-sm file:mr-3 file:border-2 file:border-ink file:bg-yellow file:px-3 file:py-1.5 file:font-mono file:text-xs file:uppercase"
+          />
+          {uploading && <span className="font-mono text-xs text-blue">Uploading...</span>}
+          <span className="font-mono text-[0.65rem] text-muted">
+            If left blank, the site's default share image is used instead.
           </span>
         </label>
 
@@ -158,10 +203,15 @@ export default function WritingEditor() {
 
       {posts.map((p) => (
         <div key={p.id} className="border-2 border-ink p-4 flex items-center justify-between gap-4">
-          <div>
-            <div className="font-display text-lg">{p.title}</div>
-            <div className="font-mono text-xs text-ink-soft">
-              {p.meta} · {formatDate(p.publishedAt)}
+          <div className="flex items-center gap-4">
+            {p.image && (
+              <img src={p.image} alt="" className="w-16 h-16 object-cover border-2 border-ink shrink-0" />
+            )}
+            <div>
+              <div className="font-display text-lg">{p.title}</div>
+              <div className="font-mono text-xs text-ink-soft">
+                {p.meta} · {formatDate(p.publishedAt)}
+              </div>
             </div>
           </div>
           <div className="flex gap-3 shrink-0">

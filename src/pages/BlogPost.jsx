@@ -44,6 +44,14 @@ export default function BlogPost({ posts, loading }) {
             <ArrowLeft size={14} /> Back to writing
           </Link>
 
+          {post.image && (
+            <img
+              src={post.image}
+              alt={post.title}
+              className="w-full aspect-[1200/630] object-cover border-2 border-ink mb-8"
+            />
+          )}
+
           <div className="font-mono text-xs uppercase tracking-widest text-blue mb-2">{post.meta}</div>
           <h1 className="font-display text-3xl md:text-4xl leading-tight mb-4">{post.title}</h1>
 
