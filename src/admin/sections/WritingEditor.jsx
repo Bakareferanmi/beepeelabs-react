@@ -9,6 +9,7 @@ export default function WritingEditor() {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(null)
   const [saving, setSaving] = useState(false)
+  const [bodyText, setBodyText] = useState('')
 
   const load = async () => {
     setLoading(true)
@@ -19,12 +20,18 @@ export default function WritingEditor() {
 
   useEffect(() => { load() }, [])
 
+  const startEditing = (post) => {
+    const data = { ...EMPTY, ...post }
+    setEditing(data)
+    setBodyText((data.body || []).join('\n'))
+  }
+
   const handleSave = async () => {
     const cleanId = editing.id.trim().toLowerCase().replace(/\s+/g, '-')
     if (!cleanId) return alert('ID is required (e.g. "my-post-title", no spaces)')
+    const body = bodyText.split('\n').map((t) => t.trim()).filter(Boolean)
     setSaving(true)
-    const toSave = { ...editing, id: cleanId }
-    await setDoc(doc(db, 'writing', cleanId), toSave)
+    await setDoc(doc(db, 'writing', cleanId), { ...editing, id: cleanId, body })
     setSaving(false)
     setEditing(null)
     load()
@@ -89,8 +96,8 @@ export default function WritingEditor() {
           </span>
           <textarea
             rows={10}
-            value={(editing.body || []).join('\n')}
-            onChange={(e) => setEditing({ ...editing, body: e.target.value.split('\n').filter(Boolean) })}
+            value={bodyText}
+            onChange={(e) => setBodyText(e.target.value)}
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm resize-none focus:outline-none focus:bg-yellow/20"
           />
         </label>
@@ -119,7 +126,7 @@ export default function WritingEditor() {
       <div className="flex items-center justify-between">
         <h2 className="font-display text-2xl">Writing</h2>
         <button
-          onClick={() => setEditing({ ...EMPTY })}
+          onClick={() => startEditing(EMPTY)}
           className="px-4 py-2.5 border-2 border-ink font-mono text-xs uppercase tracking-widest hover:bg-yellow"
         >
           + New post
@@ -134,7 +141,7 @@ export default function WritingEditor() {
           </div>
           <div className="flex gap-3 shrink-0">
             <button
-              onClick={() => setEditing({ ...EMPTY, ...p })}
+              onClick={() => startEditing(p)}
               className="font-mono text-xs uppercase tracking-widest text-blue hover:underline"
             >
               Edit

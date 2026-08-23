@@ -14,6 +14,11 @@ export default function ProjectsEditor() {
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
 
+  // Raw text buffers — kept separate from `editing` so typing commas/newlines/spaces
+  // doesn't get eaten by the array transform on every keystroke.
+  const [stackText, setStackText] = useState('')
+  const [featuresText, setFeaturesText] = useState('')
+
   const load = async () => {
     setLoading(true)
     const snap = await getDocs(collection(db, 'projects'))
@@ -23,14 +28,25 @@ export default function ProjectsEditor() {
 
   useEffect(() => { load() }, [])
 
+  const startEditing = (proj) => {
+    const data = { ...EMPTY, ...proj }
+    setEditing(data)
+    setStackText((data.stack || []).join(', '))
+    setFeaturesText((data.features || []).join('\n'))
+  }
+
   const handleSave = async () => {
     const cleanId = editing.id.trim().toLowerCase().replace(/\s+/g, '-')
     if (!cleanId) return alert('ID is required (e.g. "my-project", no spaces)')
     const cleanLink = editing.link && !editing.link.startsWith('http')
       ? `https://${editing.link}`
       : editing.link
+    const stack = stackText.split(',').map((t) => t.trim()).filter(Boolean)
+    const features = featuresText.split('\n').map((t) => t.trim()).filter(Boolean)
     setSaving(true)
-    await setDoc(doc(db, 'projects', cleanId), { ...editing, id: cleanId, link: cleanLink })
+    await setDoc(doc(db, 'projects', cleanId), {
+      ...editing, id: cleanId, link: cleanLink, stack, features,
+    })
     setSaving(false)
     setEditing(null)
     load()
@@ -162,8 +178,8 @@ export default function ProjectsEditor() {
           <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">Features (one per line)</span>
           <textarea
             rows={5}
-            value={(editing.features || []).join('\n')}
-            onChange={(e) => setEditing({ ...editing, features: e.target.value.split('\n').filter(Boolean) })}
+            value={featuresText}
+            onChange={(e) => setFeaturesText(e.target.value)}
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm resize-none focus:outline-none focus:bg-yellow/20"
           />
         </label>
@@ -172,8 +188,8 @@ export default function ProjectsEditor() {
           <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">Stack (comma separated)</span>
           <input
             type="text"
-            value={(editing.stack || []).join(', ')}
-            onChange={(e) => setEditing({ ...editing, stack: e.target.value.split(',').map((t) => t.trim()).filter(Boolean) })}
+            value={stackText}
+            onChange={(e) => setStackText(e.target.value)}
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm focus:outline-none focus:bg-yellow/20"
           />
         </label>
@@ -202,7 +218,7 @@ export default function ProjectsEditor() {
       <div className="flex items-center justify-between">
         <h2 className="font-display text-2xl">Projects</h2>
         <button
-          onClick={() => setEditing({ ...EMPTY })}
+          onClick={() => startEditing(EMPTY)}
           className="px-4 py-2.5 border-2 border-ink font-mono text-xs uppercase tracking-widest hover:bg-yellow"
         >
           + New project
@@ -217,7 +233,7 @@ export default function ProjectsEditor() {
           </div>
           <div className="flex gap-3 shrink-0">
             <button
-              onClick={() => setEditing({ ...EMPTY, ...p })}
+              onClick={() => startEditing(p)}
               className="font-mono text-xs uppercase tracking-widest text-blue hover:underline"
             >
               Edit

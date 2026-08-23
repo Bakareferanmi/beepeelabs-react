@@ -7,19 +7,27 @@ export default function AboutEditor() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [paragraphsText, setParagraphsText] = useState('')
 
   useEffect(() => {
     async function load() {
       const snap = await getDoc(doc(db, 'content', 'about'))
-      if (snap.exists()) setForm(snap.data())
+      if (snap.exists()) {
+        const data = snap.data()
+        setForm(data)
+        setParagraphsText((data.paragraphs || []).join('\n'))
+      }
       setLoading(false)
     }
     load()
   }, [])
 
   const handleSave = async () => {
+    const paragraphs = paragraphsText.split('\n').map((t) => t.trim()).filter(Boolean)
+    const toSave = { ...form, paragraphs }
     setSaving(true)
-    await setDoc(doc(db, 'content', 'about'), form)
+    await setDoc(doc(db, 'content', 'about'), toSave)
+    setForm(toSave)
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
@@ -63,8 +71,8 @@ export default function AboutEditor() {
         </span>
         <textarea
           rows={6}
-          value={form.paragraphs.join('\n')}
-          onChange={(e) => setForm({ ...form, paragraphs: e.target.value.split('\n').filter(Boolean) })}
+          value={paragraphsText}
+          onChange={(e) => setParagraphsText(e.target.value)}
           className="border-2 border-ink bg-paper px-3 py-2.5 text-sm resize-none focus:outline-none focus:bg-yellow/20"
         />
       </label>
