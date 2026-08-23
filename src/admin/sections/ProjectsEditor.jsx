@@ -24,12 +24,13 @@ export default function ProjectsEditor() {
   useEffect(() => { load() }, [])
 
   const handleSave = async () => {
-    if (!editing.id) return alert('ID is required (e.g. "my-project", no spaces)')
+    const cleanId = editing.id.trim().toLowerCase().replace(/\s+/g, '-')
+    if (!cleanId) return alert('ID is required (e.g. "my-project", no spaces)')
     const cleanLink = editing.link && !editing.link.startsWith('http')
       ? `https://${editing.link}`
       : editing.link
     setSaving(true)
-    await setDoc(doc(db, 'projects', editing.id), { ...editing, link: cleanLink })
+    await setDoc(doc(db, 'projects', cleanId), { ...editing, id: cleanId, link: cleanLink })
     setSaving(false)
     setEditing(null)
     load()
@@ -74,11 +75,11 @@ export default function ProjectsEditor() {
         <h2 className="font-display text-2xl">{projects.find((p) => p.id === editing.id) ? 'Edit' : 'New'} Project</h2>
 
         <label className="flex flex-col gap-1.5">
-          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">ID (unique, no spaces, e.g. my-project)</span>
+          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">ID (unique, no spaces — will be slugified on save)</span>
           <input
             type="text"
             value={editing.id}
-            onChange={(e) => setEditing({ ...editing, id: e.target.value.trim().toLowerCase().replace(/\s+/g, '-') })}
+            onChange={(e) => setEditing({ ...editing, id: e.target.value })}
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm focus:outline-none focus:bg-yellow/20"
           />
         </label>
@@ -233,4 +234,3 @@ export default function ProjectsEditor() {
     </div>
   )
 }
-

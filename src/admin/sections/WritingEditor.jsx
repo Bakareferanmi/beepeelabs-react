@@ -20,9 +20,11 @@ export default function WritingEditor() {
   useEffect(() => { load() }, [])
 
   const handleSave = async () => {
-    if (!editing.id) return alert('ID is required (e.g. "my-post-title", no spaces)')
+    const cleanId = editing.id.trim().toLowerCase().replace(/\s+/g, '-')
+    if (!cleanId) return alert('ID is required (e.g. "my-post-title", no spaces)')
     setSaving(true)
-    await setDoc(doc(db, 'writing', editing.id), editing)
+    const toSave = { ...editing, id: cleanId }
+    await setDoc(doc(db, 'writing', cleanId), toSave)
     setSaving(false)
     setEditing(null)
     load()
@@ -42,11 +44,11 @@ export default function WritingEditor() {
         <h2 className="font-display text-2xl">{posts.find((p) => p.id === editing.id) ? 'Edit' : 'New'} Post</h2>
 
         <label className="flex flex-col gap-1.5">
-          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">ID (unique, no spaces)</span>
+          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">ID (unique, no spaces — will be slugified on save)</span>
           <input
             type="text"
             value={editing.id}
-            onChange={(e) => setEditing({ ...editing, id: e.target.value.trim().toLowerCase().replace(/\s+/g, '-') })}
+            onChange={(e) => setEditing({ ...editing, id: e.target.value })}
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm focus:outline-none focus:bg-yellow/20"
           />
         </label>
