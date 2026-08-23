@@ -5,6 +5,9 @@ import { ArrowLeft } from 'lucide-react'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 
+const formatDate = (iso) =>
+  iso ? new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''
+
 export default function BlogPost({ posts, loading }) {
   const { id } = useParams()
   const post = posts.find((p) => p.id === id)
@@ -42,7 +45,15 @@ export default function BlogPost({ posts, loading }) {
           </Link>
 
           <div className="font-mono text-xs uppercase tracking-widest text-blue mb-2">{post.meta}</div>
-          <h1 className="font-display text-3xl md:text-4xl leading-tight mb-8">{post.title}</h1>
+          <h1 className="font-display text-3xl md:text-4xl leading-tight mb-4">{post.title}</h1>
+
+          <div className="font-mono text-xs text-muted mb-8">
+            By {post.author || 'Bakare Feranmi'}
+            {post.publishedAt && <> · <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time></>}
+            {post.updatedAt && post.updatedAt !== post.publishedAt && (
+              <> · Updated <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time></>
+            )}
+          </div>
 
           <div className="space-y-4">
             {post.body.map((p, i) => (

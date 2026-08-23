@@ -15,6 +15,9 @@ export default async function handler(req, res) {
 
   let title = 'BeepeeLabs | Bakare Oluwaferanmi'
   let description = 'Technical writing and developer notes from BeepeeLabs.'
+  let author = 'Bakare Feranmi'
+  let publishedAt = null
+  let updatedAt = null
 
   try {
     const fsUrl = `https://firestore.googleapis.com/v1/projects/beepeelabs/databases/(default)/documents/writing/${encodeURIComponent(id)}`
@@ -24,6 +27,9 @@ export default async function handler(req, res) {
       const f = data.fields || {}
       if (f.title?.stringValue) title = `${f.title.stringValue} — BeepeeLabs`
       if (f.excerpt?.stringValue) description = f.excerpt.stringValue
+      if (f.author?.stringValue) author = f.author.stringValue
+      if (f.publishedAt?.stringValue) publishedAt = f.publishedAt.stringValue
+      if (f.updatedAt?.stringValue) updatedAt = f.updatedAt.stringValue
     }
   } catch {
     // fall back to site defaults if Firestore read fails
@@ -36,6 +42,19 @@ export default async function handler(req, res) {
   const imageUrl = `${siteUrl}/og-image.png`
   const t = escape(title)
   const d = escape(description)
+  const a = escape(author)
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title.replace(' — BeepeeLabs', ''),
+    description,
+    url: pageUrl,
+    image: imageUrl,
+    author: { '@type': 'Person', name: author },
+    ...(publishedAt && { datePublished: publishedAt }),
+    ...(updatedAt && { dateModified: updatedAt }),
+  }
 
   const tags = `
 <title>${t}</title>
@@ -49,10 +68,14 @@ export default async function handler(req, res) {
 <meta property="og:image" content="${imageUrl}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="article:author" content="${a}">
+${publishedAt ? `<meta property="article:published_time" content="${publishedAt}">` : ''}
+${updatedAt ? `<meta property="article:modified_time" content="${updatedAt}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${t}">
 <meta name="twitter:description" content="${d}">
 <meta name="twitter:image" content="${imageUrl}">
+<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 `
 
   html = html

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
 
+const AUTHOR_NAME = 'Bakare Feranmi'
 const EMPTY = { id: '', meta: '', title: '', excerpt: '', body: [] }
 
 export default function WritingEditor() {
@@ -30,8 +31,17 @@ export default function WritingEditor() {
     const cleanId = editing.id.trim().toLowerCase().replace(/\s+/g, '-')
     if (!cleanId) return alert('ID is required (e.g. "my-post-title", no spaces)')
     const body = bodyText.split('\n').map((t) => t.trim()).filter(Boolean)
+    const now = new Date().toISOString()
+    const toSave = {
+      ...editing,
+      id: cleanId,
+      body,
+      author: AUTHOR_NAME,
+      publishedAt: editing.publishedAt || now, // only set once, on first save
+      updatedAt: now,
+    }
     setSaving(true)
-    await setDoc(doc(db, 'writing', cleanId), { ...editing, id: cleanId, body })
+    await setDoc(doc(db, 'writing', cleanId), toSave)
     setSaving(false)
     setEditing(null)
     load()
@@ -43,12 +53,19 @@ export default function WritingEditor() {
     load()
   }
 
+  const formatDate = (iso) =>
+    iso ? new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '—'
+
   if (loading) return <p className="text-ink-soft">Loading...</p>
 
   if (editing) {
     return (
       <div className="flex flex-col gap-4">
         <h2 className="font-display text-2xl">{posts.find((p) => p.id === editing.id) ? 'Edit' : 'New'} Post</h2>
+
+        <div className="font-mono text-[0.65rem] text-muted">
+          By {AUTHOR_NAME} · {editing.publishedAt ? `Published ${formatDate(editing.publishedAt)}` : 'Will be published now, on save'}
+        </div>
 
         <label className="flex flex-col gap-1.5">
           <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">
@@ -143,7 +160,9 @@ export default function WritingEditor() {
         <div key={p.id} className="border-2 border-ink p-4 flex items-center justify-between gap-4">
           <div>
             <div className="font-display text-lg">{p.title}</div>
-            <div className="font-mono text-xs text-muted">{p.meta}</div>
+            <div className="font-mono text-xs text-muted">
+              {p.meta} · {formatDate(p.publishedAt)}
+            </div>
           </div>
           <div className="flex gap-3 shrink-0">
             <button
