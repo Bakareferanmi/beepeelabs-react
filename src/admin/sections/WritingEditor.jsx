@@ -51,13 +51,19 @@ export default function WritingEditor() {
         <h2 className="font-display text-2xl">{posts.find((p) => p.id === editing.id) ? 'Edit' : 'New'} Post</h2>
 
         <label className="flex flex-col gap-1.5">
-          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">ID (unique, no spaces — will be slugified on save)</span>
+          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">
+            ID (this becomes the URL — use lowercase words separated by hyphens)
+          </span>
           <input
             type="text"
             value={editing.id}
             onChange={(e) => setEditing({ ...editing, id: e.target.value })}
+            placeholder="e.g. why-i-switched-to-firebase"
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm focus:outline-none focus:bg-yellow/20"
           />
+          <span className="font-mono text-[0.65rem] text-muted">
+            URL preview: /writing/{editing.id.trim().toLowerCase().replace(/\s+/g, '-') || '...'}
+          </span>
         </label>
 
         <label className="flex flex-col gap-1.5">
