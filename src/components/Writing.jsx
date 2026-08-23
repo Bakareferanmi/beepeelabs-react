@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+
+const MotionLink = motion(Link)
 
 const reveal = {
   hidden: { opacity: 0, x: -16 },
@@ -18,7 +21,7 @@ function SkeletonRow() {
   )
 }
 
-export default function Writing({ posts, loading, onOpen }) {
+export default function Writing({ posts, loading }) {
   return (
     <section id="writing" className="border-b-2 border-ink px-5 md:px-10 py-16 md:py-24">
       <div className="max-w-5xl mx-auto">
@@ -42,10 +45,10 @@ export default function Writing({ posts, loading, onOpen }) {
             className="flex flex-col border-2 border-ink"
           >
             {posts.map((post, i) => (
-              <motion.button
+              <MotionLink
                 key={post.id}
+                to={`/writing/${post.id}`}
                 variants={reveal}
-                onClick={() => onOpen(post.id)}
                 className={`text-left flex items-center justify-between gap-6 px-5 md:px-6 py-6 hover:bg-yellow transition-colors ${
                   i !== posts.length - 1 ? 'border-b-2 border-ink' : ''
                 }`}
@@ -58,7 +61,7 @@ export default function Writing({ posts, loading, onOpen }) {
                   <p className="text-sm text-ink-soft leading-relaxed max-w-xl">{post.excerpt}</p>
                 </div>
                 <ArrowRight size={20} className="shrink-0" />
-              </motion.button>
+              </MotionLink>
             ))}
           </motion.div>
         )}
@@ -66,4 +69,3 @@ export default function Writing({ posts, loading, onOpen }) {
     </section>
   )
 }
-

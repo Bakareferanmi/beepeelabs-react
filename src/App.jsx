@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from './firebase'
@@ -13,14 +14,33 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import ProjectModal from './components/ProjectModal'
-import BlogModal from './components/BlogModal'
 import PrivacyModal from './components/PrivacyModal'
 import TrafficLight from './components/TrafficLight'
 import LoadingScreen from './components/LoadingScreen'
+import BlogPost from './pages/BlogPost'
+
+function Home({ projects, writing, dataLoading, activeProject, openProject, privacyOpen, openPrivacy, closeModal }) {
+  return (
+    <div className="min-h-screen">
+      <Nav />
+      <Ticker />
+      <Hero />
+      <About />
+      <Skills />
+      <Projects projects={projects} loading={dataLoading} onOpen={openProject} />
+      <Writing posts={writing} loading={dataLoading} />
+      <Contact />
+      <Footer onOpenPrivacy={openPrivacy} />
+      <WhatsAppButton />
+      <TrafficLight />
+      <ProjectModal projectId={activeProject} projects={projects} onClose={closeModal} />
+      <PrivacyModal open={privacyOpen} onClose={closeModal} />
+    </div>
+  )
+}
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null)
-  const [activePost, setActivePost] = useState(null)
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -33,11 +53,6 @@ export default function App() {
     setActiveProject(id)
   }
 
-  const openPost = (id) => {
-    window.history.pushState({ modal: true }, '')
-    setActivePost(id)
-  }
-
   const openPrivacy = () => {
     window.history.pushState({ modal: true }, '')
     setPrivacyOpen(true)
@@ -48,7 +63,6 @@ export default function App() {
       window.history.back()
     } else {
       setActiveProject(null)
-      setActivePost(null)
       setPrivacyOpen(false)
     }
   }
@@ -56,7 +70,6 @@ export default function App() {
   useEffect(() => {
     const onPopState = () => {
       setActiveProject(null)
-      setActivePost(null)
       setPrivacyOpen(false)
     }
     window.addEventListener('popstate', onPopState)
@@ -65,17 +78,15 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape') {
-        closeModal()
-      }
+      if (e.key === 'Escape') closeModal()
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = activeProject || activePost || privacyOpen ? 'hidden' : ''
-  }, [activeProject, activePost, privacyOpen])
+    document.body.style.overflow = activeProject || privacyOpen ? 'hidden' : ''
+  }, [activeProject, privacyOpen])
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1200)
@@ -101,24 +112,29 @@ export default function App() {
   }, [])
 
   return (
-    <div className="min-h-screen">
+    <>
       <AnimatePresence>
         {loading && <LoadingScreen />}
       </AnimatePresence>
-      <Nav />
-      <Ticker />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects projects={projects} loading={dataLoading} onOpen={openProject} />
-      <Writing posts={writing} loading={dataLoading} onOpen={openPost} />
-      <Contact />
-      <Footer onOpenPrivacy={openPrivacy} />
-      <WhatsAppButton />
-      <TrafficLight />
-      <ProjectModal projectId={activeProject} projects={projects} onClose={closeModal} />
-      <BlogModal postId={activePost} posts={writing} onClose={closeModal} />
-      <PrivacyModal open={privacyOpen} onClose={closeModal} />
-    </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              projects={projects}
+              writing={writing}
+              dataLoading={dataLoading}
+              activeProject={activeProject}
+              openProject={openProject}
+              privacyOpen={privacyOpen}
+              openPrivacy={openPrivacy}
+              closeModal={closeModal}
+            />
+          }
+        />
+        <Route path="/writing/:id" element={<BlogPost posts={writing} loading={dataLoading} />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   )
 }
