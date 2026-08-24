@@ -24,6 +24,7 @@ import StatusStrip from "./components/StatusStrip";
 function Home({ projects, writing, dataLoading, activeProject, openProject, privacyOpen, openPrivacy, closeModal }) {
   return (
     <div className="min-h-screen">
+      <StatusStrip />
       <Nav />
       <Ticker />
       <Hero />
