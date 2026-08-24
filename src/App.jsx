@@ -20,7 +20,7 @@ import PrivacyModal from './components/PrivacyModal'
 import TrafficLight from './components/TrafficLight'
 import LoadingScreen from './components/LoadingScreen'
 import BlogPost from './pages/BlogPost'
-
+import StatusStrip from "./components/StatusStrip";
 function Home({ projects, writing, dataLoading, activeProject, openProject, privacyOpen, openPrivacy, closeModal }) {
   return (
     <div className="min-h-screen">
