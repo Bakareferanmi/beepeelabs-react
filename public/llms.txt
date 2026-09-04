@@ -1,0 +1,15 @@
+# BeepeeLabs
+
+> Bakare Oluwaferanmi (BeepeeLabs) — frontend developer, digital marketer, and content strategist based in Lagos, Nigeria.
+
+BeepeeLabs offers software engineering, technical writing, and SEO strategy services, available for remote work worldwide.
+
+## Background
+- B.Eng. in Electrical and Electronics Engineering, Olabisi Onabanjo University
+- Builds performant, lightweight web products — from single-file HTML apps to full React/Vite builds
+- Works with Firebase, Supabase, Cloudinary, and AI APIs
+
+## Links
+- Site: https://www.beepeelabs.cv/
+- GitHub: https://github.com/Bakareferanmi
+- LinkedIn: https://www.linkedin.com/in/bakare-feranmi-313357139
