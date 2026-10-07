@@ -6,14 +6,16 @@
 <title>BeepeeLabs | Bakare Oluwaferanmi</title>
 <meta name="description" content="BeepeeLabs — software engineering, technical writing, and SEO by Bakare Oluwaferanmi. Building clean, performant web products from Lagos, Nigeria.">
 <meta name="author" content="Bakare Oluwaferanmi">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="google-site-verification" content="2XM7tNSZYdTSR3i76yYuS4QCBWcgMHZGsSLAaRm3e0s" />
 <link rel="canonical" href="https://www.beepeelabs.cv/">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="theme-color" content="#14120E">
 
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_NG">
 <meta property="og:site_name" content="BeepeeLabs">
 <meta property="og:title" content="BeepeeLabs | Bakare Oluwaferanmi">
 <meta property="og:description" content="Software engineer. Technical writer. SEO strategist. Based in Lagos — open to remote.">
@@ -36,16 +38,34 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.beepeelabs.cv/#website",
+      "url": "https://www.beepeelabs.cv/",
+      "name": "BeepeeLabs",
+      "description": "Portfolio and services of Bakare Oluwaferanmi: software engineering, technical writing, SEO strategy and digital marketing.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://www.beepeelabs.cv/#person" }
+    },
+    {
       "@type": "Person",
+      "@id": "https://www.beepeelabs.cv/#person",
       "name": "Bakare Oluwaferanmi",
-      "alternateName": "Bakare Pheranmi",
+      "alternateName": ["Bakare Pheranmi", "Bakare Feranmi"],
       "url": "https://www.beepeelabs.cv/",
       "image": "https://www.beepeelabs.cv/og-image.png",
+      "email": "mailto:bakareferanmi96@gmail.com",
       "jobTitle": "Software Engineer, Technical Writer, SEO Strategist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "BeepeeLabs"
+      "description": "Software engineer, technical writer and SEO strategist in Lagos, Nigeria, working with clients worldwide.",
+      "worksFor": { "@id": "https://www.beepeelabs.cv/#business" },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Olabisi Onabanjo University"
       },
+      "knowsAbout": [
+        "Frontend engineering", "React", "Next.js", "Tailwind CSS", "Firebase", "Supabase",
+        "Node.js", "REST APIs", "Technical SEO", "Structured data", "Core Web Vitals",
+        "Technical writing", "Content marketing", "UI design"
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Lagos",
@@ -61,19 +81,40 @@
     },
     {
       "@type": "ProfessionalService",
+      "@id": "https://www.beepeelabs.cv/#business",
       "name": "BeepeeLabs",
       "url": "https://www.beepeelabs.cv/",
       "image": "https://www.beepeelabs.cv/og-image.png",
+      "email": "mailto:bakareferanmi96@gmail.com",
       "description": "Software engineering, technical writing, and SEO strategy services based in Lagos, Nigeria — available for remote work globally.",
       "areaServed": "Worldwide",
+      "currenciesAccepted": "USD",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Lagos",
         "addressCountry": "NG"
       },
-      "founder": {
-        "@type": "Person",
-        "name": "Bakare Oluwaferanmi"
+      "founder": { "@id": "https://www.beepeelabs.cv/#person" },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "bakareferanmi96@gmail.com",
+          "url": "https://wa.me/2348167462524",
+          "availableLanguage": "English"
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "BeepeeLabs services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Frontend Engineering", "description": "Component-driven UIs, responsive layouts, and accessible, performant interfaces in React, Next.js and Tailwind." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Backend Integration", "description": "Connecting frontends to real data with Node.js, Python, Firebase, Supabase, REST APIs and serverless functions." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO Strategy", "description": "Technical SEO audits, content architecture, on-page optimization and structured data implementation." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical Writing", "description": "Developer docs, how-to guides, product content and blog posts that rank and help people." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UI / Product Design", "description": "Wireframes, design systems and high-fidelity interfaces, designed and built by the same person." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Marketing", "description": "Growth strategy, content marketing and conversion-focused copy for web products and brands." } }
+        ]
       },
       "sameAs": [
         "https://github.com/Bakareferanmi",
@@ -89,6 +130,30 @@
 </head>
 <body>
 <div id="root"></div>
+<noscript>
+  <main style="max-width:42rem;margin:2rem auto;padding:0 1rem;font-family:system-ui,sans-serif;line-height:1.6">
+    <h1>BeepeeLabs — Bakare Oluwaferanmi</h1>
+    <p>Software engineer, technical writer and SEO strategist based in Lagos, Nigeria, working remotely with clients worldwide. Graduate of Electrical and Electronics Engineering (B.Eng., Olabisi Onabanjo University). Open to freelance and contract work, invoiced in USD.</p>
+    <h2>Services</h2>
+    <ul>
+      <li><strong>Frontend Engineering</strong> — component-driven UIs, responsive layouts and accessible, performant interfaces (HTML, CSS, JavaScript, React, Next.js, Tailwind).</li>
+      <li><strong>Backend Integration</strong> — Node.js, Python, Firebase, Supabase, REST APIs, serverless functions, Cloudinary.</li>
+      <li><strong>SEO Strategy</strong> — technical SEO audits, content architecture, on-page optimization, structured data, Core Web Vitals.</li>
+      <li><strong>Technical Writing</strong> — developer docs, API guides, how-to articles and blog posts.</li>
+      <li><strong>UI / Product Design</strong> — wireframes, design systems, high-fidelity interfaces in Figma.</li>
+      <li><strong>Digital Marketing</strong> — growth strategy, content marketing and conversion-focused copy.</li>
+    </ul>
+    <h2>Contact</h2>
+    <ul>
+      <li>Email: <a href="mailto:bakareferanmi96@gmail.com">bakareferanmi96@gmail.com</a></li>
+      <li>WhatsApp: <a href="https://wa.me/2348167462524">wa.me/2348167462524</a></li>
+      <li>GitHub: <a href="https://github.com/Bakareferanmi">github.com/Bakareferanmi</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/bakare-feranmi-313357139">linkedin.com/in/bakare-feranmi-313357139</a></li>
+      <li>X: <a href="https://x.com/bakarepheranmi">x.com/bakarepheranmi</a></li>
+    </ul>
+    <p><a href="/llms.txt">Plain-text summary for AI assistants</a> · <a href="/sitemap.xml">Sitemap</a></p>
+  </main>
+</noscript>
 <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

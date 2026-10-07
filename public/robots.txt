@@ -1,13 +1,26 @@
+# BeepeeLabs: search engines and AI assistants are welcome to read and cite this site.
+
 User-agent: *
 Allow: /
+Disallow: /admin
 
+# AI search, answer engines and model crawlers
 User-agent: GPTBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
 User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: CCBot
 Allow: /
+Disallow: /admin
 
 Sitemap: https://www.beepeelabs.cv/sitemap.xml
