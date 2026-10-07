@@ -5,6 +5,15 @@ import { db } from '../../firebase'
 const AUTHOR_NAME = 'Bakare Feranmi'
 const EMPTY = { id: '', meta: '', title: '', excerpt: '', body: [], image: '' }
 
+// URL-safe slug: lowercase letters, numbers and hyphens only (no ? # , / etc.)
+const slugify = (s) =>
+  s
+    .trim()
+    .toLowerCase()
+    .replace(/['’"]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
 export default function WritingEditor() {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -29,7 +38,8 @@ export default function WritingEditor() {
   }
 
   const handleSave = async () => {
-    const cleanId = editing.id.trim().toLowerCase().replace(/\s+/g, '-')
+    // Keep an existing post's ID untouched; clean the ID of new posts
+    const cleanId = posts.some((p) => p.id === editing.id) ? editing.id : slugify(editing.id)
     if (!cleanId) return alert('ID is required (e.g. "my-post-title", no spaces)')
     const body = bodyText.split('\n').map((t) => t.trim()).filter(Boolean)
     const now = new Date().toISOString()
@@ -105,7 +115,7 @@ export default function WritingEditor() {
             className="border-2 border-ink bg-paper px-3 py-2.5 text-sm focus:outline-none focus:bg-yellow/20"
           />
           <span className="font-mono text-[0.65rem] text-muted">
-            URL preview: /writing/{editing.id.trim().toLowerCase().replace(/\s+/g, '-') || '...'}
+            URL preview: /writing/{(posts.some((p) => p.id === editing.id) ? editing.id : slugify(editing.id)) || '...'}
           </span>
         </label>
 
