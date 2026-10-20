@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import { articlePath } from '../lib/seo.js'
 
-const MotionLink = motion(Link)
+const MotionLink = motion.create(Link)
 
 const reveal = {
   hidden: { opacity: 0, x: -16 },
@@ -47,7 +48,7 @@ export default function Writing({ posts, loading }) {
             {posts.map((post, i) => (
               <MotionLink
                 key={post.id}
-                to={`/writing/${post.id}`}
+                to={articlePath(post.id)}
                 variants={reveal}
                 className={`text-left flex items-center justify-between gap-6 px-5 md:px-6 py-6 hover:bg-yellow transition-colors ${
                   i !== posts.length - 1 ? 'border-b-2 border-ink' : ''

@@ -56,7 +56,7 @@ export default function Projects({ projects, loading, onOpen }) {
               >
                 <div className="aspect-[16/10] w-full border-b-2 border-ink bg-ink-soft relative overflow-hidden flex items-center justify-center">
                   {p.image ? (
-                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                    <img src={p.image} alt={p.name} width={800} height={500} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   ) : (
                     <span className="font-display text-6xl text-paper/25 select-none">{p.initials}</span>
                   )}

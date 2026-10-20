@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
+import { auth } from './firebase.js'
 
 export default function AdminLogin({ onSuccess }) {
   const [email, setEmail] = useState('')
@@ -15,7 +15,7 @@ export default function AdminLogin({ onSuccess }) {
     try {
       await signInWithEmailAndPassword(auth, email, password)
       onSuccess()
-    } catch (err) {
+    } catch {
       setError('Invalid email or password.')
     } finally {
       setLoading(false)

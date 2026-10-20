@@ -1,134 +1,43 @@
-const SITE = 'https://www.beepeelabs.cv'
+import { createElement } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import ArticleContent from '../src/components/ArticleContent.js'
+import { isPublishedPost } from '../src/lib/publication.js'
+import { articleMetadata, notFoundMetadata } from '../src/lib/seo.js'
+import { getDocument } from '../lib/firestore.js'
+import { readTemplate } from '../lib/template.js'
+import { renderPage, notFoundBody } from '../lib/render-page.js'
 
-export default async function handler(req, res) {
-  const { id } = req.query
-  const host = req.headers['x-forwarded-host'] || req.headers.host
-  const proto = req.headers['x-forwarded-proto'] || 'https'
-  // Fetch the template from whichever host served this request (works on preview deploys)
-  const originUrl = `${proto}://${host}`
-
-  let html = ''
-  try {
-    const htmlRes = await fetch(`${originUrl}/index.html`)
-    html = await htmlRes.text()
-  } catch {
-    res.status(502).send('Failed to load base template')
-    return
-  }
-
-  let title = 'BeepeeLabs | Bakare Oluwaferanmi'
-  let description = 'Technical writing and developer notes from BeepeeLabs.'
-  let author = 'Bakare Feranmi'
-  let publishedAt = null
-  let updatedAt = null
-  let postImage = null
-  let bodyParagraphs = []
-  let notFound = false
-
-  try {
-    const fsUrl = `https://firestore.googleapis.com/v1/projects/beepeelabs/databases/(default)/documents/writing/${encodeURIComponent(id)}`
-    const fsRes = await fetch(fsUrl)
-    if (fsRes.status === 404) {
-      notFound = true
-    } else if (fsRes.ok) {
-      const data = await fsRes.json()
-      const f = data.fields || {}
-      if (f.title?.stringValue) title = `${f.title.stringValue} — BeepeeLabs`
-      if (f.excerpt?.stringValue) description = f.excerpt.stringValue
-      if (f.author?.stringValue) author = f.author.stringValue
-      if (f.publishedAt?.stringValue) publishedAt = f.publishedAt.stringValue
-      if (f.updatedAt?.stringValue) updatedAt = f.updatedAt.stringValue
-      if (f.image?.stringValue) postImage = f.image.stringValue
-      bodyParagraphs = (f.body?.arrayValue?.values || [])
-        .map((v) => v.stringValue)
-        .filter(Boolean)
-    }
-  } catch {
-    // fall back to site defaults if Firestore read fails
-  }
-
-  // Unknown article id: return a real 404 (the React app still redirects humans to /)
-  if (notFound) {
+export function createWritingHandler({ getPost = (id) => getDocument('writing', id), getTemplate = readTemplate } = {}) {
+  return async function handler(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
-    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60')
-    res.status(404).send(html)
-    return
+    const id = req.query.id
+    try {
+      const validId = typeof id === 'string' && id.length > 0 && id.length <= 500 && !id.includes('/')
+      const [template, post] = await Promise.all([getTemplate(), validId ? getPost(id) : null])
+      if (!isPublishedPost(post)) {
+        res.setHeader('X-Robots-Tag', 'noindex, follow')
+        res.setHeader('Cache-Control', 'no-store')
+        return res.status(404).send(renderPage(template, {
+          metadata: notFoundMetadata, body: notFoundBody,
+          initialData: { projects: [], writing: [], content: {} },
+        }))
+      }
+      const body = '<div class="min-h-screen flex flex-col"><nav class="border-b-2 border-ink px-5 md:px-10 h-16 flex items-center"><a class="font-display text-lg" href="/">BeepeeLabs</a></nav>'
+        + renderToStaticMarkup(createElement(ArticleContent, { post }))
+        + '<footer class="bg-ink text-paper px-5 md:px-10 py-10"><a href="mailto:bakareferanmi96@gmail.com">Discuss a project with BeepeeLabs</a></footer></div>'
+      res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=30')
+      return res.status(200).send(renderPage(template, {
+        metadata: articleMetadata(post), body,
+        initialData: { projects: [], writing: [post], content: {} },
+      }))
+    } catch {
+      // An upstream outage is temporary, not a missing article or an indexable
+      // empty page. Do not cache it or expose backend exception details.
+      res.setHeader('Cache-Control', 'no-store')
+      res.setHeader('Retry-After', '60')
+      return res.status(503).send('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Content temporarily unavailable | BeepeeLabs</title></head><body><main><h1>Content temporarily unavailable</h1><p>Please try again shortly.</p><a href="/">BeepeeLabs home</a></main></body></html>')
+    }
   }
-
-  const escape = (str) =>
-    String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
-
-  const pageUrl = `${SITE}/writing/${id}`
-  const imageUrl = postImage || `${SITE}/og-image.png`
-  const headline = title.replace(' — BeepeeLabs', '')
-  const t = escape(title)
-  const d = escape(description)
-  const a = escape(author)
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    '@id': `${pageUrl}#article`,
-    mainEntityOfPage: pageUrl,
-    headline,
-    description,
-    url: pageUrl,
-    image: imageUrl,
-    inLanguage: 'en',
-    author: { '@type': 'Person', name: author, url: `${SITE}/` },
-    publisher: { '@id': `${SITE}/#business` },
-    ...(bodyParagraphs.length && { articleBody: bodyParagraphs.join('\n\n') }),
-    ...(publishedAt && { datePublished: publishedAt }),
-    ...(updatedAt && { dateModified: updatedAt }),
-  }
-  // Keep "</script>" sequences in article text from closing the tag early
-  const jsonLdSafe = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
-
-  const tags = `
-<title>${t}</title>
-<meta name="description" content="${d}">
-<link rel="canonical" href="${pageUrl}">
-<meta property="og:type" content="article">
-<meta property="og:locale" content="en_NG">
-<meta property="og:site_name" content="BeepeeLabs">
-<meta property="og:title" content="${t}">
-<meta property="og:description" content="${d}">
-<meta property="og:url" content="${pageUrl}">
-<meta property="og:image" content="${imageUrl}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="article:author" content="${a}">
-${publishedAt ? `<meta property="article:published_time" content="${publishedAt}">` : ''}
-${updatedAt ? `<meta property="article:modified_time" content="${updatedAt}">` : ''}
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${t}">
-<meta name="twitter:description" content="${d}">
-<meta name="twitter:image" content="${imageUrl}">
-<script type="application/ld+json">${jsonLdSafe}</script>
-`
-
-  // Full article text for crawlers that do not run JavaScript (most AI crawlers)
-  const articleNoscript = bodyParagraphs.length
-    ? `<noscript>
-  <article style="max-width:42rem;margin:2rem auto;padding:0 1rem;font-family:system-ui,sans-serif;line-height:1.6">
-    <h1>${escape(headline)}</h1>
-    <p>By ${a}${publishedAt ? ` · <time datetime="${escape(publishedAt)}">${escape(publishedAt)}</time>` : ''}</p>
-    ${bodyParagraphs.map((p) => `<p>${escape(p)}</p>`).join('\n    ')}
-    <p><a href="/">BeepeeLabs home</a> · <a href="mailto:bakareferanmi96@gmail.com">Contact Bakare Oluwaferanmi</a></p>
-  </article>
-</noscript>`
-    : ''
-
-  html = html
-    .replace(/<title>.*?<\/title>/i, '')
-    .replace(/<meta name="description"[^>]*>/i, '')
-    .replace(/<link rel="canonical"[^>]*>/i, '')
-    .replace(/<meta property="og:[^"]*"[^>]*>\s*/gi, '')
-    .replace(/<meta name="twitter:[^"]*"[^>]*>\s*/gi, '')
-    .replace(/<noscript>[\s\S]*?<\/noscript>/i, articleNoscript)
-    .replace('</head>', `${tags}</head>`)
-
-  res.setHeader('Content-Type', 'text/html; charset=utf-8')
-  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=600, stale-while-revalidate')
-  res.status(200).send(html)
 }
+
+export default createWritingHandler()

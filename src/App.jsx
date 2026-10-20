@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
+import { Routes, Route, useLocation, useMatch } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import { trackPageView } from './lib/trackView'
 import { collection, getDocs } from 'firebase/firestore'
@@ -18,8 +17,13 @@ import WhatsAppButton from './components/WhatsAppButton'
 import ProjectModal from './components/ProjectModal'
 import PrivacyModal from './components/PrivacyModal'
 import TrafficLight from './components/TrafficLight'
-import LoadingScreen from './components/LoadingScreen'
 import BlogPost from './pages/BlogPost'
+import NotFound from './pages/NotFound'
+import Service from './pages/Service'
+import { SERVICES } from './data/services.js'
+import { PublicContentContext } from './lib/PublicContent.jsx'
+import { isPublishedPost } from './lib/publication.js'
+import { applyMetadata, articleMetadata, homeMetadata, notFoundMetadata, serviceMetadata } from './lib/seo.js'
 import StatusStrip from "./components/StatusStrip";
 function Home({ projects, writing, dataLoading, activeProject, openProject, privacyOpen, openPrivacy, closeModal }) {
   return (
@@ -42,15 +46,15 @@ function Home({ projects, writing, dataLoading, activeProject, openProject, priv
   )
 }
 
-export default function App() {
+export default function App({ initialData }) {
   const location = useLocation()
+  const articleMatch = useMatch('/writing/:id')
+  const serviceMatch = useMatch('/services/:slug')
   const [activeProject, setActiveProject] = useState(null)
   const [privacyOpen, setPrivacyOpen] = useState(false)
-  const [loading, setLoading] = useState(true)
-
-  const [projects, setProjects] = useState([])
-  const [writing, setWriting] = useState([])
-  const [dataLoading, setDataLoading] = useState(true)
+  const [projects, setProjects] = useState(initialData?.projects || [])
+  const [writing, setWriting] = useState(() => (initialData?.writing || []).filter(isPublishedPost))
+  const [dataLoading, setDataLoading] = useState(!initialData)
 
   const openProject = (id) => {
     window.history.pushState({ modal: true }, '')
@@ -93,9 +97,16 @@ export default function App() {
   }, [activeProject, privacyOpen])
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200)
-    return () => clearTimeout(timer)
-  }, [])
+    if (location.pathname === '/') return applyMetadata(homeMetadata)
+    if (articleMatch) {
+      const post = writing.find((item) => item.id === articleMatch.params.id)
+      if (post) applyMetadata(articleMetadata(post))
+      else if (!dataLoading) applyMetadata(notFoundMetadata)
+      return
+    }
+    const service = serviceMatch && SERVICES.find((item) => item.slug === serviceMatch.params.slug)
+    applyMetadata(service ? serviceMetadata(service) : notFoundMetadata)
+  }, [location.pathname, articleMatch, serviceMatch, writing, dataLoading])
 
   useEffect(() => {
     if (import.meta.env.PROD) {
@@ -110,8 +121,8 @@ export default function App() {
           getDocs(collection(db, 'projects')),
           getDocs(collection(db, 'writing')),
         ])
-        setProjects(projectsSnap.docs.map((d) => d.data()))
-        setWriting(writingSnap.docs.map((d) => d.data()))
+        setProjects(projectsSnap.docs.map((d) => ({ ...d.data(), id: d.id })))
+        setWriting(writingSnap.docs.map((d) => ({ ...d.data(), id: d.id })).filter(isPublishedPost))
       } catch (err) {
         console.error('Failed to load content:', err)
       } finally {
@@ -122,11 +133,8 @@ export default function App() {
   }, [])
 
   return (
-    <>
+    <PublicContentContext.Provider value={initialData?.content || {}}>
       <Analytics />
-      <AnimatePresence>
-        {loading && <LoadingScreen />}
-      </AnimatePresence>
       <Routes>
         <Route
           path="/"
@@ -144,8 +152,9 @@ export default function App() {
           }
         />
         <Route path="/writing/:id" element={<BlogPost posts={writing} loading={dataLoading} />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/services/:slug" element={<Service />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </PublicContentContext.Provider>
   )
 }
