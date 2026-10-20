@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { X, ArrowUpRight } from 'lucide-react'
+import EnquiryLink from './EnquiryLink'
 
 export default function ProjectModal({ projectId, projects, onClose }) {
   const project = projects.find((p) => p.id === projectId)
@@ -50,7 +51,7 @@ export default function ProjectModal({ projectId, projects, onClose }) {
                 Key features
               </div>
               <ul className="space-y-2 mb-6">
-                {project.features.map((f) => (
+                {(project.features || []).map((f) => (
                   <li key={f} className="flex gap-2.5 text-sm text-ink-soft leading-relaxed">
                     <span className="text-yellow-deep shrink-0 mt-0.5">&#9632;</span>
                     {f}
@@ -59,7 +60,7 @@ export default function ProjectModal({ projectId, projects, onClose }) {
               </ul>
 
               <div className="flex flex-wrap gap-1.5 mb-7">
-                {project.stack.map((t) => (
+                {(project.stack || []).map((t) => (
                   <span
                     key={t}
                     className="font-mono text-[0.65rem] uppercase tracking-wide px-2 py-1 border border-ink text-ink-soft"
@@ -83,6 +84,10 @@ export default function ProjectModal({ projectId, projects, onClose }) {
                   Coming soon
                 </span>
               )}
+              <div className="border-t-2 border-ink mt-7 pt-6">
+                <p className="text-sm text-ink-soft mb-4">Have a similar project in mind?</p>
+                <EnquiryLink source="project-modal" context={'a project like ' + project.name.trim()} className="inline-flex px-5 py-3 bg-yellow border-2 border-ink font-mono text-xs uppercase hover:bg-blue hover:text-paper transition-colors">Ask for a quote</EnquiryLink>
+              </div>
             </div>
           </motion.div>
         </motion.div>

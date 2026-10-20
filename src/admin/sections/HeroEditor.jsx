@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
+import { resolveHero } from '../../data/offer.js'
 
 export default function HeroEditor() {
-  const [form, setForm] = useState({ headline: '', subtext: '', availableForWork: true })
+  const [form, setForm] = useState(() => resolveHero())
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -11,7 +12,7 @@ export default function HeroEditor() {
   useEffect(() => {
     async function load() {
       const snap = await getDoc(doc(db, 'content', 'hero'))
-      if (snap.exists()) setForm(snap.data())
+      if (snap.exists()) setForm(resolveHero(snap.data()))
       setLoading(false)
     }
     load()

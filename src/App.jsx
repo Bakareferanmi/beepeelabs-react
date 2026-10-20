@@ -7,6 +7,7 @@ import { db } from './firebase'
 import Nav from './components/Nav'
 import Ticker from './components/Ticker'
 import Hero from './components/Hero'
+import WebsiteOffer from './components/WebsiteOffer'
 import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
@@ -20,18 +21,21 @@ import TrafficLight from './components/TrafficLight'
 import BlogPost from './pages/BlogPost'
 import NotFound from './pages/NotFound'
 import Service from './pages/Service'
+import Project from './pages/Project'
 import { SERVICES } from './data/services.js'
+import { PROJECT_STORIES } from './data/projectStories.js'
 import { PublicContentContext } from './lib/PublicContent.jsx'
 import { isPublishedPost } from './lib/publication.js'
-import { applyMetadata, articleMetadata, homeMetadata, notFoundMetadata, serviceMetadata } from './lib/seo.js'
+import { applyMetadata, articleMetadata, homeMetadata, notFoundMetadata, serviceMetadata, projectMetadata } from './lib/seo.js'
 import StatusStrip from "./components/StatusStrip";
-function Home({ projects, writing, dataLoading, activeProject, openProject, privacyOpen, openPrivacy, closeModal }) {
+function Home({ projects, writing, dataLoading, activeProject, openProject, openPrivacy, closeModal }) {
   return (
     <div className="min-h-screen">
       <StatusStrip />
       <Nav />
       <Ticker />
       <Hero />
+      <WebsiteOffer />
       <About />
       <Skills />
       <Projects projects={projects} loading={dataLoading} onOpen={openProject} />
@@ -41,7 +45,6 @@ function Home({ projects, writing, dataLoading, activeProject, openProject, priv
       <WhatsAppButton />
       <TrafficLight />
       <ProjectModal projectId={activeProject} projects={projects} onClose={closeModal} />
-      <PrivacyModal open={privacyOpen} onClose={closeModal} />
     </div>
   )
 }
@@ -50,6 +53,7 @@ export default function App({ initialData }) {
   const location = useLocation()
   const articleMatch = useMatch('/writing/:id')
   const serviceMatch = useMatch('/services/:slug')
+  const projectMatch = useMatch('/projects/:id')
   const [activeProject, setActiveProject] = useState(null)
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [projects, setProjects] = useState(initialData?.projects || [])
@@ -98,6 +102,11 @@ export default function App({ initialData }) {
 
   useEffect(() => {
     if (location.pathname === '/') return applyMetadata(homeMetadata)
+    if (projectMatch) {
+      const story = PROJECT_STORIES.find((item) => item.id === projectMatch.params.id)
+      applyMetadata(story ? projectMetadata(story, projects.find((item) => item.id === story.id)) : notFoundMetadata)
+      return
+    }
     if (articleMatch) {
       const post = writing.find((item) => item.id === articleMatch.params.id)
       if (post) applyMetadata(articleMetadata(post))
@@ -106,7 +115,13 @@ export default function App({ initialData }) {
     }
     const service = serviceMatch && SERVICES.find((item) => item.slug === serviceMatch.params.slug)
     applyMetadata(service ? serviceMetadata(service) : notFoundMetadata)
-  }, [location.pathname, articleMatch, serviceMatch, writing, dataLoading])
+  }, [location.pathname, articleMatch, serviceMatch, projectMatch, projects, writing, dataLoading])
+
+  useEffect(() => {
+    const anchor = location.hash && document.getElementById(location.hash.slice(1))
+    if (anchor) anchor.scrollIntoView({ behavior: 'instant' })
+    else window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [location.pathname, location.hash])
 
   useEffect(() => {
     if (import.meta.env.PROD) {
@@ -145,16 +160,17 @@ export default function App({ initialData }) {
               dataLoading={dataLoading}
               activeProject={activeProject}
               openProject={openProject}
-              privacyOpen={privacyOpen}
               openPrivacy={openPrivacy}
               closeModal={closeModal}
             />
           }
         />
-        <Route path="/writing/:id" element={<BlogPost posts={writing} loading={dataLoading} />} />
-        <Route path="/services/:slug" element={<Service />} />
+        <Route path="/writing/:id" element={<BlogPost posts={writing} loading={dataLoading} onOpenPrivacy={openPrivacy} />} />
+        <Route path="/services/:slug" element={<Service onOpenPrivacy={openPrivacy} />} />
+        <Route path="/projects/:id" element={<Project projects={projects} onOpenPrivacy={openPrivacy} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <PrivacyModal open={privacyOpen} onClose={closeModal} />
     </PublicContentContext.Provider>
   )
 }

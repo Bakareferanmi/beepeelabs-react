@@ -1,5 +1,6 @@
 import { listDocuments } from '../lib/firestore.js'
 import { SERVICES } from '../src/data/services.js'
+import { PROJECT_STORIES, projectPath } from '../src/data/projectStories.js'
 import { isPublishedPost } from '../src/lib/publication.js'
 import { SITE, articlePath } from '../src/lib/seo.js'
 
@@ -13,6 +14,7 @@ export function createSitemapHandler({ getPosts = () => listDocuments('writing')
       const urls = [
         { loc: SITE + '/' },
         ...SERVICES.map((service) => ({ loc: SITE + '/services/' + service.slug })),
+        ...PROJECT_STORIES.map((story) => ({ loc: SITE + projectPath(story.id) })),
         ...posts.filter(isPublishedPost).map((post) => ({
           loc: SITE + articlePath(post.id),
           lastmod: toDate(post.updatedAt) || toDate(post.publishedAt),

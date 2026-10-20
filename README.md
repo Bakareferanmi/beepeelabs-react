@@ -42,13 +42,24 @@ in `src/data/services.js`.
 
 `npm run build` first builds the client, then runs `scripts/prerender.mjs`.
 The script reads the public Firebase content and renders the existing React
-homepage plus four service pages to HTML. It also emits an admin shell and a
-custom `404.html`. The build requires access to the existing public Firestore
+homepage, four service pages and three project pages to HTML. It also emits an
+admin shell and a custom `404.html`. The build requires access to the existing public Firestore
 REST API; a content outage fails the build instead of publishing an empty site.
 
 The browser starts with that public snapshot and refreshes its content from
 Firebase. To refresh the homepage's initial HTML after changing CMS content,
 trigger a new Vercel build. Service copy changes also need a build.
+
+Project explanations are maintained in `src/data/projectStories.js`. The three
+project URLs (`/projects/hairehaven`, `/projects/isebe`, `/projects/evvee`) have
+their own visible HTML, canonical URLs, sharing metadata and sitemap entries.
+Their images and live project links come from the public CMS snapshot. A build
+refreshes those details. These pages describe the work and do not claim sales,
+conversion improvements or other client results.
+
+The homepage uses business-focused starter copy from `src/data/offer.js`.
+The original starter headline and subtext resolve to the new defaults in both
+the public page and Hero editor; custom CMS copy and availability are preserved.
 
 Articles are rendered at request time by `api/writing-og.js`, including their
 visible body, metadata and BlogPosting structured data. Article edits and
@@ -63,7 +74,7 @@ They are retained in Firebase and remain editable. Other existing articles keep
 their previous public status. Draft filtering is a publication control; this
 change does not modify Firestore access rules.
 
-Vercel rewrites only known article, service and admin routes. Missing paths use
+Vercel rewrites only known article, service, project and admin routes. Missing paths use
 the generated 404 page and HTTP 404 status. Article lookup failures return a
 retryable, uncached 503 rather than an empty successful page. Functions include
 `dist/index.html` explicitly so they can load the template without an HTTP
@@ -74,6 +85,26 @@ functions require Vercel's development environment or a preview deployment.
 After deploying, inspect the homepage, a service page and an article in Search
 Console, then submit `/sitemap.xml`. Search Console access and ranking outcomes
 are outside the code changes.
+
+## Enquiries and contact analytics
+
+Quote links open WhatsApp with a short project-specific message. Email remains
+available. The contact form uses the existing Formspree endpoint, validates
+required fields and shows persistent success/error feedback. Without JavaScript,
+the HTML form can POST directly to Formspree. An accepted form response confirms
+submission to the service, not inbox delivery or a completed conversation.
+
+The admin Analytics page separates page views from WhatsApp clicks, email clicks
+and accepted form submissions. Aggregate action counters use the existing
+Firestore `analytics` collection and its existing access rules. These are
+client-side counters, can include repeated actions, can be blocked by browser
+or network settings, and are not trusted sales or unique-person measurements.
+No test messages are sent to the real contact endpoint by the regression tests.
+
+Contact-action tracking stores only a fixed action name, a fixed CTA source, a
+known page path (or a broad fallback), a counter and last-action time. It does
+not store form values, URL query strings or referrers. Development builds skip
+these writes. The privacy dialog describes the form provider and analytics.
 
 ## Deploying (GitHub → Vercel)
 

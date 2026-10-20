@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
+  { href: '#services', label: 'Services' },
   { href: '#projects', label: 'Projects' },
+  { href: '#about', label: 'About' },
   { href: '#writing', label: 'Writing' },
 ]
 
@@ -66,7 +66,7 @@ export default function Nav() {
             onClick={(e) => handleLink(e, '#contact')}
             className="font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 border-ink bg-yellow text-ink hover:bg-blue hover:text-paper hover:border-blue transition-colors"
           >
-            Hire me
+            Get a quote
           </a>
         </li>
       </ul>
@@ -101,7 +101,7 @@ export default function Nav() {
             onClick={(e) => handleLink(e, '#contact')}
             className="font-mono text-sm uppercase tracking-wider text-ink bg-yellow px-6 py-4"
           >
-            Hire me
+            Get a quote
           </a>
         </motion.div>
       )}
