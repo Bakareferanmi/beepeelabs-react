@@ -32,31 +32,34 @@ export default function PrivacyModal({ open, onClose }) {
               <div className="font-mono text-xs uppercase tracking-widest text-blue mb-2">Legal</div>
               <h3 className="font-display text-3xl md:text-4xl mb-1">Privacy Policy</h3>
               <p className="font-mono text-[0.65rem] uppercase tracking-widest text-muted mb-6">
-                Last updated: July 2026
+                Last updated: October 2026
               </p>
 
               <div className="space-y-5 text-sm text-ink-soft leading-relaxed">
                 <p>
                   This policy explains what happens to your information when you visit
-                  or use this website (beepeelabs.com), operated by Bakare Oluwaferanmi.
+                  or use this website (beepeelabs.cv), operated by Bakare Oluwaferanmi.
                 </p>
 
                 <div>
                   <h4 className="font-display text-lg text-ink mb-1.5">What I collect</h4>
                   <p>
                     The contact form on this site asks for your name, email address, and
-                    a description of your project. This information is only used to
-                    reply to your message — it is not sold, shared with third parties,
-                    or used for marketing.
+                    a description of your project. These details are used to reply to
+                    your enquiry. Formspree processes the submission and delivery of
+                    contact form messages. WhatsApp and email links let you contact me
+                    through those services instead.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="font-display text-lg text-ink mb-1.5">Cookies and tracking</h4>
                   <p>
-                    This site does not use tracking cookies or third-party advertising
-                    scripts. If analytics tools are added in the future, this policy
-                    will be updated to reflect that.
+                    The site uses Vercel Analytics and aggregate Firebase counters for
+                    page views and contact actions, such as clicking WhatsApp or email
+                    and submitting the contact form. The contact-action counters do not
+                    include your name, email address, message, query strings or referrer
+                    URLs. They measure website use, not completed conversations or sales.
                   </p>
                 </div>
 
@@ -64,16 +67,17 @@ export default function PrivacyModal({ open, onClose }) {
                   <h4 className="font-display text-lg text-ink mb-1.5">Third-party links</h4>
                   <p>
                     This site links out to external platforms such as GitHub, LinkedIn,
-                    Instagram, and X. Those platforms have their own privacy policies,
+                    Instagram, X, and WhatsApp. Those platforms have their own privacy policies,
                     and I'm not responsible for how they handle your data.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-display text-lg text-ink mb-1.5">Data retention</h4>
+                  <h4 className="font-display text-lg text-ink mb-1.5">Your messages</h4>
                   <p>
-                    Messages sent through the contact form are kept only as long as
-                    needed to respond to your inquiry, then deleted.
+                    Messages sent through the form are processed by Formspree and may
+                    also be held in the email inbox used to answer enquiries. Contact me
+                    if you want to ask about a message you have sent.
                   </p>
                 </div>
 

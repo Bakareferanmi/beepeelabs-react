@@ -6,6 +6,7 @@ import { createSitemapHandler } from '../api/sitemap.js'
 import { isPublishedPost, publicationError } from '../src/lib/publication.js'
 import { getDocument, listDocuments } from '../lib/firestore.js'
 import { SERVICES } from '../src/data/services.js'
+import { PROJECT_STORIES, projectPath } from '../src/data/projectStories.js'
 
 const template = await readFile(new URL('../index.html', import.meta.url), 'utf8')
 const article = {
@@ -105,12 +106,13 @@ test('a content service outage returns retryable 503 rather than a fake article 
   assert.doesNotMatch(res.body, /private backend detail/)
 })
 
-test('sitemap includes every service and only published articles', async () => {
+test('sitemap includes every service and project, and only published articles', async () => {
   const res = response()
   await createSitemapHandler({ getPosts: async () => [article, { ...article, id: 'draft', status: 'draft' }, { ...article, id: 'nnn' }] })({}, res)
   assert.equal(res.statusCode, 200)
   assert.equal(res.headers['content-type'], 'application/xml; charset=utf-8')
   for (const service of SERVICES) assert.ok(res.body.includes('/services/' + service.slug))
+  for (const story of PROJECT_STORIES) assert.ok(res.body.includes(projectPath(story.id)))
   assert.ok(res.body.includes('/writing/' + article.id))
   assert.doesNotMatch(res.body, /\/writing\/(?:draft|nnn)</)
   assert.match(res.body, /<lastmod>2026-10-11<\/lastmod>/)

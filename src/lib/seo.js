@@ -1,3 +1,5 @@
+import { projectPath } from '../data/projectStories.js'
+
 export const SITE = 'https://www.beepeelabs.cv'
 export const HOME_TITLE = 'Web & Mobile App Developer in Lagos | BeepeeLabs'
 export const HOME_DESCRIPTION = 'Websites, web apps and React Native mobile apps by Bakare Oluwaferanmi in Lagos, Nigeria. Technical writing and SEO services for businesses worldwide.'
@@ -52,6 +54,20 @@ export function serviceMetadata(service) {
       description: service.description,
       provider: { '@id': SITE + '/#business' },
       areaServed: 'Worldwide',
+    },
+  }
+}
+
+export function projectMetadata(story, project) {
+  const url = SITE + projectPath(story.id)
+  const image = project?.image || SITE + '/og-image.png'
+  return {
+    title: story.title + ' | BeepeeLabs', description: story.description, url, image,
+    schema: {
+      '@context': 'https://schema.org', '@type': 'CreativeWork',
+      '@id': url + '#project', url, name: story.title,
+      description: story.description, image,
+      creator: { '@id': SITE + '/#person' },
     },
   }
 }

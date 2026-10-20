@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion'
 import { MessageCircle } from 'lucide-react'
+import { enquiryHref } from '../lib/enquiries.js'
+import { trackLeadEvent } from '../lib/trackView.js'
 
 export default function WhatsAppButton() {
   return (
     <motion.a
-      href="https://wa.me/2348167462524?text=Hi%20Bakare%2C%20I%20found%20your%20site%20and%20wanted%20to%20chat%20about%20a%20project."
+      href={enquiryHref('whatsapp')}
+      onClick={() => { void trackLeadEvent('whatsapp_click', 'floating') }}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

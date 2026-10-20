@@ -6,21 +6,19 @@ import { db } from '../firebase'
 import avatarFront from '../assets/avatar-front.jpg'
 import avatarBack from '../assets/avatar-back.jpg'
 import { usePublicContent } from '../lib/PublicContent.jsx'
+import { resolveHero } from '../data/offer.js'
+import EnquiryLink from './EnquiryLink'
 
 export default function Hero() {
   const content = usePublicContent()
   const [flipped, setFlipped] = useState(false)
-  const [hero, setHero] = useState(content.hero || {
-    headline: 'I build interfaces that actually work',
-    subtext: 'Software engineer, technical writer, and SEO strategist. I turn complex problems into clean, performant web products. Based in Lagos — available remotely.',
-    availableForWork: true,
-  })
+  const [hero, setHero] = useState(() => resolveHero(content.hero))
 
   useEffect(() => {
     async function fetchHero() {
       try {
         const snap = await getDoc(doc(db, 'content', 'hero'))
-        if (snap.exists()) setHero(snap.data())
+        if (snap.exists()) setHero(resolveHero(snap.data()))
       } catch (err) {
         console.error('Failed to load hero content:', err)
       }
@@ -94,6 +92,7 @@ export default function Hero() {
               style={{ display: 'inline-block' }}
             >
               {word}
+              {' '}
             </motion.span>
           ))}
         </h1>
@@ -113,26 +112,23 @@ export default function Hero() {
           transition={{ delay: 0.72, duration: 0.5 }}
           className="flex flex-wrap items-center gap-3"
         >
+          <EnquiryLink
+            source="hero"
+            context="a business website, online store or web app"
+            className="group inline-flex items-center gap-2 px-6 py-3.5 bg-ink text-paper font-mono text-sm uppercase tracking-wider border-2 border-ink hover:bg-blue hover:border-blue transition-colors"
+          >
+            Get a project quote
+            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          </EnquiryLink>
           <a
             href="#projects"
             onClick={(e) => {
               e.preventDefault()
               document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
             }}
-            className="group inline-flex items-center gap-2 px-6 py-3.5 bg-ink text-paper font-mono text-sm uppercase tracking-wider border-2 border-ink hover:bg-blue hover:border-blue transition-colors"
-          >
-            View my work
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </a>
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault()
-              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
-            }}
             className="group inline-flex items-center gap-2 px-6 py-3.5 font-mono text-sm uppercase tracking-wider border-2 border-ink hover:text-blue hover:border-blue transition-colors"
           >
-            Get in touch
+            See my projects
             <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </motion.div>
