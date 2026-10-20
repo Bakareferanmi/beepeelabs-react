@@ -20,8 +20,9 @@ export default function Nav() {
   }, [])
 
   const handleLink = (e, href) => {
-    e.preventDefault()
     setOpen(false)
+    if (window.location.pathname !== '/') return
+    e.preventDefault()
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -32,7 +33,7 @@ export default function Nav() {
       }`}
     >
       <a
-        href="#home"
+        href="/#home"
         onClick={(e) => handleLink(e, '#home')}
         className="flex items-center gap-2.5"
       >
@@ -49,7 +50,7 @@ export default function Nav() {
         {LINKS.map((l) => (
           <li key={l.href}>
             <a
-              href={l.href}
+              href={'/' + l.href}
               onClick={(e) => handleLink(e, l.href)}
               className={`font-mono text-xs uppercase tracking-wider hover:text-blue transition-colors ${
                 scrolled ? 'text-paper' : 'text-ink-soft'
@@ -61,7 +62,7 @@ export default function Nav() {
         ))}
         <li>
           <a
-            href="#contact"
+            href="/#contact"
             onClick={(e) => handleLink(e, '#contact')}
             className="font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 border-ink bg-yellow text-ink hover:bg-blue hover:text-paper hover:border-blue transition-colors"
           >
@@ -88,7 +89,7 @@ export default function Nav() {
           {LINKS.map((l) => (
             <a
               key={l.href}
-              href={l.href}
+              href={'/' + l.href}
               onClick={(e) => handleLink(e, l.href)}
               className="font-mono text-sm uppercase tracking-wider text-paper px-6 py-4 border-b border-ink-soft"
             >
@@ -96,7 +97,7 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             onClick={(e) => handleLink(e, '#contact')}
             className="font-mono text-sm uppercase tracking-wider text-ink bg-yellow px-6 py-4"
           >

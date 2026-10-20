@@ -3,17 +3,24 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
-import AdminApp from './admin/AdminApp.jsx'
+import LazyAdmin from './admin/LazyAdmin.jsx'
 
-const isAdmin = window.location.pathname.startsWith('/admin')
+const isAdmin = /^\/admin(?:\/|$)/.test(window.location.pathname)
+let initialData
+try {
+  const node = document.getElementById('public-content')
+  if (node) initialData = JSON.parse(node.textContent)
+} catch {
+  // A missing snapshot falls back to the existing live CMS reads.
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {isAdmin ? (
-      <AdminApp />
+      <LazyAdmin />
     ) : (
       <BrowserRouter>
-        <App />
+        <App initialData={initialData} />
       </BrowserRouter>
     )}
   </StrictMode>,

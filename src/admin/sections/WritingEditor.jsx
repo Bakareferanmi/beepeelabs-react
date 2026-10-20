@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
+import { publicationError, publicationStatus } from '../../lib/publication.js'
 
 const AUTHOR_NAME = 'Bakare Feranmi'
-const EMPTY = { id: '', meta: '', title: '', excerpt: '', body: [], image: '' }
+const EMPTY = { id: '', meta: '', title: '', excerpt: '', body: [], image: '', status: 'draft' }
 
 // URL-safe slug: lowercase letters, numbers and hyphens only (no ? # , / etc.)
 const slugify = (s) =>
@@ -25,14 +26,14 @@ export default function WritingEditor() {
   const load = async () => {
     setLoading(true)
     const snap = await getDocs(collection(db, 'writing'))
-    setPosts(snap.docs.map((d) => d.data()))
+    setPosts(snap.docs.map((d) => ({ ...d.data(), id: d.id })))
     setLoading(false)
   }
 
   useEffect(() => { load() }, [])
 
   const startEditing = (post) => {
-    const data = { ...EMPTY, ...post }
+    const data = { ...EMPTY, ...post, status: publicationStatus(post) }
     setEditing(data)
     setBodyText((data.body || []).join('\n'))
   }
@@ -42,20 +43,29 @@ export default function WritingEditor() {
     const cleanId = posts.some((p) => p.id === editing.id) ? editing.id : slugify(editing.id)
     if (!cleanId) return alert('ID is required (e.g. "my-post-title", no spaces)')
     const body = bodyText.split('\n').map((t) => t.trim()).filter(Boolean)
+    if (editing.status === 'published') {
+      const error = publicationError({ ...editing, body })
+      if (error) return alert(error)
+    }
     const now = new Date().toISOString()
     const toSave = {
       ...editing,
       id: cleanId,
       body,
       author: AUTHOR_NAME,
-      publishedAt: editing.publishedAt || now,
+      ...(editing.publishedAt || editing.status === 'published' ? { publishedAt: editing.publishedAt || now } : {}),
       updatedAt: now,
     }
     setSaving(true)
-    await setDoc(doc(db, 'writing', cleanId), toSave)
-    setSaving(false)
-    setEditing(null)
-    load()
+    try {
+      await setDoc(doc(db, 'writing', cleanId), toSave)
+      setEditing(null)
+      await load()
+    } catch (error) {
+      alert('Could not save this post: ' + error.message)
+    } finally {
+      setSaving(false)
+    }
   }
 
   const handleDelete = async (id) => {
@@ -100,8 +110,21 @@ export default function WritingEditor() {
         <h2 className="font-display text-2xl">{posts.find((p) => p.id === editing.id) ? 'Edit' : 'New'} Post</h2>
 
         <div className="font-mono text-[0.65rem] text-ink-soft">
-          By {AUTHOR_NAME} · {editing.publishedAt ? `Published ${formatDate(editing.publishedAt)}` : 'Will be published now, on save'}
+          By {AUTHOR_NAME} · {editing.publishedAt ? `First published ${formatDate(editing.publishedAt)}` : 'Not published yet'}
         </div>
+
+        <label className="flex flex-col gap-1.5">
+          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">Publication status</span>
+          <select
+            value={editing.status}
+            onChange={(e) => setEditing({ ...editing, status: e.target.value })}
+            className="border-2 border-ink bg-paper px-3 py-2.5 text-sm"
+          >
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+          <span className="font-mono text-[0.65rem] text-muted">Drafts are hidden from the public website and sitemap.</span>
+        </label>
 
         <label className="flex flex-col gap-1.5">
           <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">
@@ -186,7 +209,7 @@ export default function WritingEditor() {
             disabled={saving}
             className="px-5 py-3 bg-ink text-paper font-mono text-sm uppercase tracking-wider hover:bg-blue transition-colors disabled:opacity-60"
           >
-            {saving ? 'Saving...' : 'Save post'}
+            {saving ? 'Saving...' : editing.status === 'published' ? 'Save and publish' : 'Save draft'}
           </button>
           <button
             onClick={() => setEditing(null)}
@@ -220,7 +243,7 @@ export default function WritingEditor() {
             <div>
               <div className="font-display text-lg">{p.title}</div>
               <div className="font-mono text-xs text-ink-soft">
-                {p.meta} · {formatDate(p.publishedAt)}
+                {publicationStatus(p) === 'published' ? 'Published' : 'Draft'} · {p.meta} · {formatDate(p.publishedAt)}
               </div>
             </div>
           </div>

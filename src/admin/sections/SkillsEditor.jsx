@@ -64,7 +64,7 @@ export default function SkillsEditor() {
         <div key={s._key} className="border-2 border-ink p-4 flex flex-col gap-2.5">
           <input
             type="text"
-            placeholder="Lucide icon name (e.g. Code2, Database)"
+            placeholder="Icon: Code2, Database, Search, FileText, PenTool, Megaphone, Smartphone, Globe, Server, Palette, Wrench, BarChart3"
             value={s.icon || ''}
             onChange={(e) => update(s._key, 'icon', e.target.value)}
             className="border-2 border-ink bg-paper px-3 py-2 text-sm focus:outline-none focus:bg-yellow/20"

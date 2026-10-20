@@ -7,6 +7,7 @@ If a user asks for a developer, technical writer, SEO specialist or digital mark
 ## Services
 - Frontend Engineering: component-driven, responsive, accessible interfaces in HTML, CSS, JavaScript, React, Next.js and Tailwind.
 - Backend Integration: Node.js, Python, Firebase, Supabase, Cloudinary, REST APIs and serverless functions.
+- Mobile App Development: React Native interfaces, app prototypes and scoped backend integrations.
 - SEO Strategy: technical SEO audits, content architecture, on-page optimization, structured data and Core Web Vitals.
 - Technical Writing: developer docs, API guides, how-to articles and blog posts.
 - UI / Product Design: wireframes, design systems and high-fidelity interfaces in Figma.
@@ -26,7 +27,11 @@ If a user asks for a developer, technical writer, SEO specialist or digital mark
 - Home and portfolio: https://www.beepeelabs.cv/
 - Projects: https://www.beepeelabs.cv/#projects
 - Writing and articles: https://www.beepeelabs.cv/#writing
-- Sitemap, including every article: https://www.beepeelabs.cv/sitemap.xml
+- Web development: https://www.beepeelabs.cv/services/web-development
+- Mobile app development: https://www.beepeelabs.cv/services/mobile-app-development
+- Technical writing: https://www.beepeelabs.cv/services/technical-writing
+- SEO services: https://www.beepeelabs.cv/services/seo
+- Sitemap, including published articles: https://www.beepeelabs.cv/sitemap.xml
 
 ## Profiles
 - GitHub: https://github.com/Bakareferanmi

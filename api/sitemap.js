@@ -1,56 +1,35 @@
-const SITE = 'https://www.beepeelabs.cv'
-const FIRESTORE = 'https://firestore.googleapis.com/v1/projects/beepeelabs/databases/(default)/documents'
+import { listDocuments } from '../lib/firestore.js'
+import { SERVICES } from '../src/data/services.js'
+import { isPublishedPost } from '../src/lib/publication.js'
+import { SITE, articlePath } from '../src/lib/seo.js'
 
-const xmlEscape = (s) =>
-  String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]))
+const xmlEscape = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[character]))
+const toDate = (value) => value && !Number.isNaN(new Date(value).getTime()) ? new Date(value).toISOString().slice(0, 10) : null
 
-const toDate = (iso) => {
-  const d = iso ? new Date(iso) : null
-  return d && !Number.isNaN(d.getTime()) ? d.toISOString().slice(0, 10) : null
-}
-
-export default async function handler(req, res) {
-  const urls = [{ loc: `${SITE}/`, changefreq: 'weekly', priority: '1.0' }]
-
-  try {
-    let pageToken = ''
-    do {
-      const qs = `pageSize=300${pageToken ? `&pageToken=${encodeURIComponent(pageToken)}` : ''}`
-      const fsRes = await fetch(`${FIRESTORE}/writing?${qs}`)
-      if (!fsRes.ok) break
-      const data = await fsRes.json()
-      for (const doc of data.documents || []) {
-        const id = doc.name.split('/').pop()
-        const f = doc.fields || {}
-        const lastmod = toDate(f.updatedAt?.stringValue) || toDate(f.publishedAt?.stringValue)
-        urls.push({
-          loc: `${SITE}/writing/${encodeURIComponent(id)}`,
-          lastmod,
-          changefreq: 'monthly',
-          priority: '0.7',
-        })
-      }
-      pageToken = data.nextPageToken || ''
-    } while (pageToken)
-  } catch {
-    // If Firestore is unreachable, still serve a valid sitemap with the home page
+export function createSitemapHandler({ getPosts = () => listDocuments('writing') } = {}) {
+  return async function handler(req, res) {
+    try {
+      const posts = await getPosts()
+      const urls = [
+        { loc: SITE + '/' },
+        ...SERVICES.map((service) => ({ loc: SITE + '/services/' + service.slug })),
+        ...posts.filter(isPublishedPost).map((post) => ({
+          loc: SITE + articlePath(post.id),
+          lastmod: toDate(post.updatedAt) || toDate(post.publishedAt),
+        })),
+      ]
+      const body = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + urls.map((url) => '  <url><loc>' + xmlEscape(url.loc) + '</loc>' + (url.lastmod ? '<lastmod>' + url.lastmod + '</lastmod>' : '') + '</url>').join('\n')
+        + '\n</urlset>\n'
+      res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+      res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=30')
+      return res.status(200).send(body)
+    } catch {
+      res.setHeader('Cache-Control', 'no-store')
+      res.setHeader('Retry-After', '60')
+      return res.status(503).send('Sitemap temporarily unavailable. Please try again shortly.')
+    }
   }
-
-  const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
-  .map(
-    (u) => `  <url>
-    <loc>${xmlEscape(u.loc)}</loc>${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`,
-  )
-  .join('\n')}
-</urlset>
-`
-
-  res.setHeader('Content-Type', 'application/xml; charset=utf-8')
-  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate')
-  res.status(200).send(body)
 }
+
+export default createSitemapHandler()

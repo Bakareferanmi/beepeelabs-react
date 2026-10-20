@@ -2,8 +2,12 @@
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/writing/:id", "destination": "/api/writing-og?id=:id" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/services/:slug", "destination": "/services/:slug.html" },
+    { "source": "/admin/:path*", "destination": "/admin.html" }
   ],
+  "functions": {
+    "api/*.js": { "includeFiles": "dist/index.html" }
+  },
   "headers": [
     {
       "source": "/(.*)",

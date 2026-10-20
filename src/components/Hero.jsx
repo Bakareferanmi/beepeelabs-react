@@ -5,10 +5,12 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import avatarFront from '../assets/avatar-front.jpg'
 import avatarBack from '../assets/avatar-back.jpg'
+import { usePublicContent } from '../lib/PublicContent.jsx'
 
 export default function Hero() {
+  const content = usePublicContent()
   const [flipped, setFlipped] = useState(false)
-  const [hero, setHero] = useState({
+  const [hero, setHero] = useState(content.hero || {
     headline: 'I build interfaces that actually work',
     subtext: 'Software engineer, technical writer, and SEO strategist. I turn complex problems into clean, performant web products. Based in Lagos — available remotely.',
     availableForWork: true,
@@ -51,11 +53,16 @@ export default function Hero() {
             >
               <img
                 src={avatarFront}
+                width={80}
+                height={80}
                 alt="Bakare Oluwaferanmi"
                 className="absolute inset-0 w-full h-full object-cover [backface-visibility:hidden]"
               />
               <img
                 src={avatarBack}
+                width={80}
+                height={80}
+                loading="lazy"
                 alt="Alter ego"
                 className="absolute inset-0 w-full h-full object-cover [backface-visibility:hidden]"
                 style={{ transform: 'rotateY(180deg)' }}

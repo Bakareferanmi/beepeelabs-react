@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import * as Icons from 'lucide-react'
+import { Code2, Database, Search, FileText, PenTool, Megaphone, Smartphone, Globe, Server, Palette, Wrench, BarChart3 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import { usePublicContent } from '../lib/PublicContent.jsx'
+import { SERVICES } from '../data/services.js'
+
+const ICONS = { Code2, Database, Search, FileText, PenTool, Megaphone, Smartphone, Globe, Server, Palette, Wrench, BarChart3 }
 
 const DEFAULT_SKILLS = [
   { icon: 'Code2', name: 'Frontend Engineering', desc: 'Component-driven UIs, responsive layouts, and accessible, performant interfaces built from the ground up.', tags: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Tailwind'] },
@@ -19,7 +24,8 @@ const reveal = {
 }
 
 export default function Skills() {
-  const [skills, setSkills] = useState(DEFAULT_SKILLS)
+  const content = usePublicContent()
+  const [skills, setSkills] = useState(content.skills?.items || DEFAULT_SKILLS)
 
   useEffect(() => {
     async function fetchSkills() {
@@ -47,7 +53,7 @@ export default function Skills() {
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink border-2 border-ink"
         >
           {skills.map((s) => {
-            const Icon = Icons[s.icon] || Icons.Code2
+            const Icon = ICONS[s.icon] || Code2
             return (
               <motion.div key={s.name} variants={reveal} className="bg-paper p-6 flex flex-col gap-3">
                 <Icon size={22} className="text-blue" />
@@ -67,6 +73,9 @@ export default function Skills() {
             )
           })}
         </motion.div>
+        <nav aria-label="Services" className="flex flex-wrap gap-x-6 gap-y-3 mt-8">
+          {SERVICES.map((service) => <Link key={service.slug} className="text-sm text-blue underline" to={'/services/' + service.slug}>{service.label}</Link>)}
+        </nav>
       </div>
     </section>
   )

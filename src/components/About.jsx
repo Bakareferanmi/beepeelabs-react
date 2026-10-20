@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import { usePublicContent } from '../lib/PublicContent.jsx'
 
 const DEFAULT_ABOUT = {
   eyebrow: '01 / About',
@@ -27,7 +28,8 @@ function renderBold(text) {
 }
 
 export default function About() {
-  const [about, setAbout] = useState(DEFAULT_ABOUT)
+  const content = usePublicContent()
+  const [about, setAbout] = useState(content.about || DEFAULT_ABOUT)
 
   useEffect(() => {
     async function fetchAbout() {

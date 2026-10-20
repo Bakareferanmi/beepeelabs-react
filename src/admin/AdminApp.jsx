@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
-import { auth } from '../firebase'
+import { auth } from './firebase.js'
 import AdminLogin from './AdminLogin'
 import HeroEditor from './sections/HeroEditor'
 import AboutEditor from './sections/AboutEditor'
