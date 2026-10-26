@@ -103,12 +103,11 @@ and accepted form submissions. Aggregate action counters use the existing
 Firestore `analytics` collection and its existing access rules. These are
 client-side counters, can include repeated actions, can be blocked by browser
 or network settings, and are not trusted sales or unique-person measurements.
-Before production rollout, set this form's approved hostname to
-`www.beepeelabs.cv` and allow that hostname in the Cloudflare Turnstile widget.
-The supplied endpoint currently accepts only `https://beepeelabs.cv`; a preflight
-from `https://www.beepeelabs.cv` returns 403. Do not deploy this change until the
-hostname matches the portfolio's canonical address. Preview and localhost
-origins are intentionally rejected by the production endpoint.
+The contact form is registered for `www.beepeelabs.cv`, the portfolio's
+canonical hostname. The production endpoint returns an allowed CORS preflight
+for `https://www.beepeelabs.cv`. That hostname must also be allowed in the
+Cloudflare Turnstile widget. Preview and localhost origins are intentionally
+rejected by the production endpoint.
 
 To finish the live check, submit a clearly labelled test enquiry from the
 production contact form, verify it appears in the Pentreeform inbox, and check

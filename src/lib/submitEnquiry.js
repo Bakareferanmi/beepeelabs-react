@@ -1,4 +1,4 @@
-export const CONTACT_FORM_ENDPOINT = 'https://pentreeform.vercel.app/f/edb64226292745dfa9fc5de646ce4659'
+export const CONTACT_FORM_ENDPOINT = 'https://pentreeform.vercel.app/f/da6905b6d1a1416691ebaaf5f5fb6289'
 // Public widget key from Pentreeform's /api/config. No secret belongs in the client.
 export const CONTACT_TURNSTILE_SITE_KEY = '0x4AAAAAAFmfScjhtwVx_3ig'
 

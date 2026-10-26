@@ -55,7 +55,7 @@ test('valid enquiries go only to Pentreeform with message and security token', a
     sent = { url, options }
     return Response.json({ ok: true, id: 'saved-submission' }, { status: 201 })
   })
-  assert.equal(CONTACT_FORM_ENDPOINT, 'https://pentreeform.vercel.app/f/edb64226292745dfa9fc5de646ce4659')
+  assert.equal(CONTACT_FORM_ENDPOINT, 'https://pentreeform.vercel.app/f/da6905b6d1a1416691ebaaf5f5fb6289')
   assert.equal(sent.url, CONTACT_FORM_ENDPOINT)
   assert.equal(sent.options.method, 'POST')
   assert.deepEqual(JSON.parse(sent.options.body), { name: 'A Visitor', email: 'visitor@example.com', message: 'A storefront.', 'cf-turnstile-response': 'security-token', _gotcha: '' })
