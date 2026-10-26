@@ -49,15 +49,16 @@ test('contact actions do not inflate legacy page-view totals', () => {
   assert.deepEqual(summary.totals, { whatsapp_click: 5, email_click: 0, form_accepted: 1 })
 })
 
-test('valid enquiries go only to the existing form endpoint with trimmed form fields', async () => {
+test('valid enquiries go only to Pentreeform with message and security token', async () => {
   let sent
-  await submitEnquiry({ name: ' A Visitor ', email: ' visitor@example.com ', project: ' A storefront. ', analytics: 'must not be sent' }, async (url, options) => {
+  await submitEnquiry({ name: ' A Visitor ', email: ' visitor@example.com ', project: ' A storefront. ', 'cf-turnstile-response': 'security-token', analytics: 'must not be sent' }, async (url, options) => {
     sent = { url, options }
-    return new Response(null, { status: 200 })
+    return Response.json({ ok: true, id: 'saved-submission' }, { status: 201 })
   })
+  assert.equal(CONTACT_FORM_ENDPOINT, 'https://pentreeform.vercel.app/f/edb64226292745dfa9fc5de646ce4659')
   assert.equal(sent.url, CONTACT_FORM_ENDPOINT)
   assert.equal(sent.options.method, 'POST')
-  assert.deepEqual(JSON.parse(sent.options.body), { name: 'A Visitor', email: 'visitor@example.com', project: 'A storefront.' })
+  assert.deepEqual(JSON.parse(sent.options.body), { name: 'A Visitor', email: 'visitor@example.com', message: 'A storefront.', 'cf-turnstile-response': 'security-token', _gotcha: '' })
 })
 
 test('empty or invalid enquiries do not contact the form service', async () => {
@@ -72,9 +73,19 @@ test('empty or invalid enquiries do not contact the form service', async () => {
 })
 
 test('rejected or failed form requests never resolve as accepted submissions', async () => {
-  const form = { name: 'A Visitor', email: 'visitor@example.com', project: 'A website' }
+  const form = { name: 'A Visitor', email: 'visitor@example.com', project: 'A website', 'cf-turnstile-response': 'security-token' }
   await assert.rejects(submitEnquiry(form, async () => new Response(null, { status: 422 })), /could not be submitted/)
   await assert.rejects(submitEnquiry(form, async () => { throw new Error('offline') }), /offline/)
+})
+
+test('missing security token prevents sending and provider errors remain visible', async () => {
+  const form = { name: 'Visitor', email: 'visitor@example.com', project: 'A website' }
+  await assert.rejects(submitEnquiry(form, async () => assert.fail('must not send')), /security check/)
+  form['cf-turnstile-response'] = 'token'
+  await assert.rejects(submitEnquiry(form, async () => Response.json({ error: 'Security check hostname does not match this form.' }, { status: 400 })), /hostname/)
+  for (const response of [Response.json({ ok: false }), Response.json({ ok: true }), new Response('<html>Error page</html>')]) {
+    await assert.rejects(submitEnquiry(form, async () => response), /could not be confirmed/)
+  }
 })
 
 test('each project has its own canonical URL, description and sharing image', () => {

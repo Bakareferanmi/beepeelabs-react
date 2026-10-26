@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Send, MessageCircle } from 'lucide-react'
 import EnquiryLink from './EnquiryLink'
+import ContactVerification from './ContactVerification'
 import { trackLeadEvent } from '../lib/trackView.js'
 import { CONTACT_FORM_ENDPOINT, submitEnquiry } from '../lib/submitEnquiry.js'
 
@@ -44,6 +45,8 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', project: '' })
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
+  const [token, setToken] = useState('')
+  const [verificationKey, setVerificationKey] = useState(0)
 
   const handleSend = async (event) => {
     event.preventDefault()
@@ -51,13 +54,16 @@ export default function Contact() {
     setError('')
     setStatus('sending')
     try {
-      await submitEnquiry(form)
+      await submitEnquiry({ ...form, 'cf-turnstile-response': token, _gotcha: new FormData(event.currentTarget).get('_gotcha') })
       void trackLeadEvent('form_accepted', 'contact')
       setStatus('sent')
       setForm({ name: '', email: '', project: '' })
     } catch (err) {
       setStatus('error')
       setError(err.message || 'Please try again, or reach me on WhatsApp or email.')
+    } finally {
+      setToken('')
+      setVerificationKey((key) => key + 1)
     }
   }
 
@@ -156,7 +162,7 @@ export default function Contact() {
               </span>
               <textarea
                 rows={4}
-                name="project"
+                name="message"
                 required
                 maxLength={5000}
                 placeholder="What does your business do, and what would you like to build or improve?"
@@ -165,9 +171,12 @@ export default function Contact() {
                 className="border-2 border-ink bg-paper px-3 py-2.5 font-body text-sm resize-none focus:outline-none focus:bg-yellow/20"
               />
             </label>
+            <input type="text" name="_gotcha" hidden tabIndex={-1} autoComplete="off" aria-hidden="true" />
+            <ContactVerification onToken={setToken} resetKey={verificationKey} />
+            <noscript><p className="text-sm text-ink-soft">Enable JavaScript to send this form, or use the WhatsApp and email links.</p></noscript>
             <motion.button
               type="submit"
-              disabled={status === 'sending'}
+              disabled={status === 'sending' || !token}
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-ink text-paper font-mono text-sm uppercase tracking-wider hover:bg-blue transition-colors disabled:opacity-60"
             >
@@ -176,7 +185,7 @@ export default function Contact() {
             </motion.button>
             {status === 'sent' && <p role="status" className="text-sm text-green">Your message has been submitted. You can also reach me using the WhatsApp or email links.</p>}
             {status === 'error' && <p role="alert" className="text-sm text-red-700">{error}</p>}
-            <p className="text-xs text-muted leading-relaxed">Your details are used to reply to your enquiry. The form is processed by Formspree.</p>
+            <p className="text-xs text-muted leading-relaxed">Your details are used to reply to your enquiry. The form is processed by Pentreeform. Cloudflare Turnstile checks for spam.</p>
           </div>
         </motion.form>
       </div>

@@ -46,8 +46,8 @@ export default function PrivacyModal({ open, onClose }) {
                   <p>
                     The contact form on this site asks for your name, email address, and
                     a description of your project. These details are used to reply to
-                    your enquiry. Formspree processes the submission and delivery of
-                    contact form messages. WhatsApp and email links let you contact me
+                    your enquiry. Pentreeform processes the submission and delivery of
+                    contact form messages. Cloudflare Turnstile checks form submissions for spam. WhatsApp and email links let you contact me
                     through those services instead.
                   </p>
                 </div>
@@ -75,7 +75,7 @@ export default function PrivacyModal({ open, onClose }) {
                 <div>
                   <h4 className="font-display text-lg text-ink mb-1.5">Your messages</h4>
                   <p>
-                    Messages sent through the form are processed by Formspree and may
+                    Messages sent through the form are processed by Pentreeform and may
                     also be held in the email inbox used to answer enquiries. Contact me
                     if you want to ask about a message you have sent.
                   </p>
