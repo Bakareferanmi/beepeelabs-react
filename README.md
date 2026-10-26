@@ -89,9 +89,13 @@ are outside the code changes.
 ## Enquiries and contact analytics
 
 Quote links open WhatsApp with a short project-specific message. Email remains
-available. The contact form uses the existing Formspree endpoint, validates
-required fields and shows persistent success/error feedback. Without JavaScript,
-the HTML form can POST directly to Formspree. An accepted form response confirms
+available. The contact form uses the Pentreeform endpoint in `src/lib/submitEnquiry.js`,
+validates required fields, and shows persistent success/error feedback. It maps
+project details to Pentreeform's `message` field and sends a Cloudflare Turnstile
+token with action `submission`. The public site key is in the same module; no
+secret key is used in the portfolio. The widget refreshes after each attempt
+and supports expiry, failure and retry. JavaScript is required for the security
+check; WhatsApp and email remain available without it. An accepted form response confirms
 submission to the service, not inbox delivery or a completed conversation.
 
 The admin Analytics page separates page views from WhatsApp clicks, email clicks
@@ -99,6 +103,17 @@ and accepted form submissions. Aggregate action counters use the existing
 Firestore `analytics` collection and its existing access rules. These are
 client-side counters, can include repeated actions, can be blocked by browser
 or network settings, and are not trusted sales or unique-person measurements.
+The contact form is registered for `www.beepeelabs.cv`, the portfolio's
+canonical hostname. The production endpoint returns an allowed CORS preflight
+for `https://www.beepeelabs.cv`. That hostname must also be allowed in the
+Cloudflare Turnstile widget. Preview and localhost origins are intentionally
+rejected by the production endpoint.
+
+To finish the live check, submit a clearly labelled test enquiry from the
+production contact form, verify it appears in the Pentreeform inbox, and check
+the notification delivery status separately. Acceptance confirms a saved
+submission, not email delivery.
+
 No test messages are sent to the real contact endpoint by the regression tests.
 
 Contact-action tracking stores only a fixed action name, a fixed CTA source, a
