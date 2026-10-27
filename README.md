@@ -90,24 +90,27 @@ are outside the code changes.
 
 Quote links open WhatsApp with a short project-specific message. Email remains
 available. The contact form uses the Pentreeform endpoint in `src/lib/submitEnquiry.js`,
-validates required fields, and shows persistent success/error feedback. It maps
-project details to Pentreeform's `message` field and sends a Cloudflare Turnstile
-token with action `submission`. The public site key is in the same module; no
-secret key is used in the portfolio. The widget refreshes after each attempt
-and supports expiry, failure and retry. JavaScript is required for the security
-check; WhatsApp and email remain available without it. An accepted form response confirms
-submission to the service, not inbox delivery or a completed conversation.
+validates required fields, and shows persistent success/error feedback. It sends
+project details as `message` and opens a Pentreeform-hosted verification dialog
+when the API returns HTTP 202. That response is pending, not accepted. Success
+requires a saved-message confirmation from the exact Pentreeform origin, iframe,
+and ticket. Closing or timing out leaves the entered form values available.
+No Cloudflare widget, account, or site key is required on the portfolio. Retries
+of unchanged form values reuse a submission identifier to prevent duplicates.
+Without JavaScript, a normal POST redirects to Pentreeform for verification.
 
 The admin Analytics page separates page views from WhatsApp clicks, email clicks
 and accepted form submissions. Aggregate action counters use the existing
 Firestore `analytics` collection and its existing access rules. These are
 client-side counters, can include repeated actions, can be blocked by browser
 or network settings, and are not trusted sales or unique-person measurements.
-The contact form is registered for `www.beepeelabs.cv`, the portfolio's
-canonical hostname. The production endpoint returns an allowed CORS preflight
-for `https://www.beepeelabs.cv`. That hostname must also be allowed in the
-Cloudflare Turnstile widget. Preview and localhost origins are intentionally
-rejected by the production endpoint.
+Deployment dependency: the Pentreeform Worker must include hosted verification
+and migration `0004_hosted_verification.sql` before this portfolio change goes
+live. Until then the current endpoint requires a direct Turnstile token. This
+branch must remain undeployed until the backend rollout is confirmed.
+
+The contact form is registered for `www.beepeelabs.cv`. The updated backend accepts
+both www and root variants. Other subdomains and localhost remain blocked.
 
 To finish the live check, submit a clearly labelled test enquiry from the
 production contact form, verify it appears in the Pentreeform inbox, and check
