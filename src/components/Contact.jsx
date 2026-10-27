@@ -180,9 +180,8 @@ export default function Contact() {
               {buttonLabel}
               <Send size={15} />
             </motion.button>
-            {status === 'sent' && <p role="status" className="text-sm text-green">Your message has been submitted. You can also reach me using the WhatsApp or email links.</p>}
+            {status === 'sent' && <p role="status" className="text-sm text-green">Message submitted.</p>}
             {status === 'error' && <p role="alert" className="text-sm text-red-700">{error}</p>}
-            <p className="text-xs text-muted leading-relaxed">Your details are used to reply to your enquiry. Pentreeform processes this form and handles spam verification after you submit.</p>
           </div>
         </motion.form>
       </div>
