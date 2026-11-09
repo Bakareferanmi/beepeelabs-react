@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ArrowUpRight, Download, Github, Mail, MapPin, Smartphone, Layers3, Code2, BriefcaseBusiness } from 'lucide-react'
+import { ArrowUpRight, Download, Mail, MapPin, Smartphone, Layers3, Code2, BriefcaseBusiness } from 'lucide-react'
+import { GithubIcon as Github } from '../components/SocialIcons'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 
