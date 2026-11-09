@@ -22,10 +22,10 @@ const skills = [
   ['Tools & other', 'Git, GitHub, Excel, technical writing, troubleshooting, Python fundamentals'],
 ]
 const roleGroups = [
-  { title: 'Software engineering', note: 'Primary focus', roles: ['Frontend Developer', 'React / Next.js Developer', 'React Native Developer', 'Mobile App Developer', 'Junior Full-Stack Developer', 'Junior Backend / API Developer'] },
-  { title: 'IT & technical operations', note: 'Related opportunities', roles: ['IT Support Specialist', 'Application Support Analyst', 'Technical Support Engineer', 'Junior QA / Software Tester', 'Technical Operations Associate'] },
-  { title: 'Content & digital products', note: 'Additional strengths', roles: ['Technical Writer', 'Developer Documentation Writer', 'Digital Marketing Specialist', 'Web Content / SEO Specialist'] },
-  { title: 'Data & analytics', note: 'Entry-level, developing skills', roles: ['Data Analyst Intern', 'Junior Reporting / Excel Analyst'] },
+  { title: 'Web engineering', note: 'Frontend & full-stack', roles: ['Frontend Engineer', 'React / Next.js Developer', 'Junior Full-Stack Engineer', 'Web Application Developer'] },
+  { title: 'Mobile engineering', note: 'Cross-platform apps', roles: ['React Native Developer', 'Mobile Application Developer', 'Cross-Platform App Developer'] },
+  { title: 'Backend engineering', note: 'APIs & databases', roles: ['Junior Backend Developer', 'API Developer', 'Node.js / Express.js Developer'] },
+  { title: 'Related engineering roles', note: 'Junior / entry-level', roles: ['Junior Software Engineer', 'Associate Software Engineer', 'Junior QA Automation Engineer'] },
 ]
 const email = 'bakareferanmi96@gmail.com'
 
@@ -68,7 +68,7 @@ export default function Recruiters({ onOpenPrivacy }) {
                 <div className="flex items-center gap-3 mb-3"><BriefcaseBusiness size={20} aria-hidden="true" /><p className="font-mono text-xs uppercase tracking-widest">Career interests</p></div>
                 <h2 className="font-display text-4xl md:text-5xl">Roles I'm exploring</h2>
               </div>
-              <p className="text-sm md:text-base text-ink-soft max-w-md">My strongest focus is web and mobile software development. I'm also open to adjacent technical and communication roles.</p>
+              <p className="text-sm md:text-base text-ink-soft max-w-md">I'm focused on engineering roles across web, mobile and backend development, with interest in junior software quality engineering.</p>
             </motion.div>
             <div className="grid md:grid-cols-2 gap-3">
               {roleGroups.map((group, index) => (
