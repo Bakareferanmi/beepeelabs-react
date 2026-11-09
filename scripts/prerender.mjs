@@ -7,7 +7,7 @@ import { renderPage, notFoundBody } from '../lib/render-page.js'
 import { SERVICES } from '../src/data/services.js'
 import { PROJECT_STORIES, projectPath } from '../src/data/projectStories.js'
 import { isPublishedPost } from '../src/lib/publication.js'
-import { homeMetadata, notFoundMetadata, serviceMetadata, projectMetadata } from '../src/lib/seo.js'
+import { homeMetadata, recruiterMetadata, notFoundMetadata, serviceMetadata, projectMetadata } from '../src/lib/seo.js'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const output = join(root, 'dist')
@@ -42,6 +42,9 @@ try {
   })
   await writeFile(join(output, 'index.html'), renderPage(template, {
     metadata: homeMetadata, body: visibleMarkup(render('/', initialData)), initialData,
+  }))
+  await writeFile(join(output, 'for-recruiters.html'), renderPage(template, {
+    metadata: recruiterMetadata, body: visibleMarkup(render('/for-recruiters', emptyData)), initialData: emptyData,
   }))
   await mkdir(join(output, 'services'), { recursive: true })
   for (const service of SERVICES) {
