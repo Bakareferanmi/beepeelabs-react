@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Download, Mail, MapPin, Smartphone, Layers3, Code2, BriefcaseBusiness } from 'lucide-react'
 import { GithubIcon as Github } from '../components/SocialIcons'
 import Nav from '../components/Nav'
@@ -29,6 +30,8 @@ function External({ href, children, className = '' }) {
 
 export default function Recruiters({ onOpenPrivacy }) {
   const [filter, setFilter] = useState('All work')
+  const reduced = useReducedMotion()
+  const reveal = (delay = 0) => reduced ? {} : { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.12 }, transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] } }
   const shown = filter === 'All work' ? work : work.filter((item) => item.type === filter)
   return (
     <div className="min-h-screen bg-paper text-ink">
@@ -36,42 +39,43 @@ export default function Recruiters({ onOpenPrivacy }) {
       <main id="main">
         <section className="border-b-2 border-ink px-5 md:px-10 pt-14 pb-16 md:pt-20 md:pb-24">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-wider mb-10">
+            <motion.div {...reveal()} className="flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-wider mb-10">
               <span className="inline-flex gap-2 items-center border border-ink px-3 py-2"><span className="h-2 w-2 rounded-full bg-green" /> Open to opportunities</span>
               <span className="inline-flex gap-1 items-center text-muted"><MapPin size={14} /> Lagos, Nigeria · Remote / Hybrid / On-site</span>
-            </div>
-            <p className="font-mono text-xs uppercase tracking-[.25em] text-blue mb-4">Bakare Oluwaferanmi Pelumi · Engineering portfolio</p>
-            <h1 className="font-display text-[clamp(3.2rem,9vw,8.5rem)] leading-[.94] max-w-6xl">Building for web, mobile &amp; real people.</h1>
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 mt-9 items-end">
+            </motion.div>
+            <motion.p {...reveal(0.07)} className="font-mono text-xs uppercase tracking-[.25em] text-blue mb-4">Bakare Oluwaferanmi Pelumi · Engineering portfolio</motion.p>
+            <motion.h1 {...reveal(0.14)} className="font-display text-[clamp(3.2rem,9vw,8.5rem)] leading-[.94] max-w-6xl">Building for web, mobile &amp; real people.</motion.h1>
+            <motion.div {...reveal(0.21)} className="grid lg:grid-cols-2 gap-8 lg:gap-20 mt-9 items-end">
               <p className="text-lg md:text-xl leading-relaxed text-ink-soft max-w-2xl">I'm a software developer with hands-on experience building web applications, React Native mobile apps and cloud-backed tools. I work across interfaces, APIs, databases, deployment and product improvement.</p>
               <div className="flex flex-wrap gap-3 lg:justify-end">
                 <a href={'mailto:' + email + '?subject=CV%20Request%20-%20Bakare%20Oluwaferanmi'} className="inline-flex items-center gap-2 bg-ink text-paper px-5 py-3 font-mono text-xs uppercase hover:bg-blue transition-colors"><Download size={16} /> Request CV</a>
                 <External href="https://github.com/Bakareferanmi" className="inline-flex items-center gap-2 border-2 border-ink px-5 py-3 font-mono text-xs uppercase hover:bg-yellow transition-colors"><Github size={16} /> GitHub</External>
                 <a href={'mailto:' + email + '?subject=Job%20Opportunity'} className="inline-flex items-center gap-2 border-2 border-ink px-5 py-3 font-mono text-xs uppercase hover:bg-yellow transition-colors"><Mail size={16} /> Email me</a>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
         <section className="px-5 md:px-10 py-10 border-b-2 border-ink bg-yellow">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-5 md:items-start md:justify-between">
+          <motion.div {...reveal()} className="max-w-7xl mx-auto flex flex-col md:flex-row gap-5 md:items-start md:justify-between">
             <div className="flex items-center gap-3"><BriefcaseBusiness size={20} /><h2 className="font-display text-2xl md:text-3xl">Roles I'm exploring</h2></div>
-            <div className="flex flex-wrap gap-2 md:max-w-3xl md:justify-end">{roles.map((role) => <span key={role} className="bg-paper border border-ink px-3 py-2 font-mono text-xs">{role}</span>)}</div>
-          </div>
+            <div className="flex flex-wrap gap-2 md:max-w-3xl md:justify-end">{roles.map((role, i) => <motion.span key={role} {...(reduced ? {} : { initial: { opacity: 0, y: 9 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { delay: i * 0.06, duration: 0.35 } })} className="bg-paper border border-ink px-3 py-2 font-mono text-xs">{role}</motion.span>)}</div>
+          </motion.div>
         </section>
 
         <section id="selected-work" className="px-5 md:px-10 py-16 md:py-24 border-b-2 border-ink">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-wrap gap-6 items-end justify-between mb-8">
+            <motion.div {...reveal()} className="flex flex-wrap gap-6 items-end justify-between mb-8">
               <div><p className="font-mono text-blue text-xs uppercase tracking-widest mb-3">01 / Proof of work</p><h2 className="font-display text-5xl md:text-7xl">Selected projects</h2></div>
               <p className="max-w-sm text-ink-soft">A mix of real deployments, independent tools and developing products. Each repository shows the implementation.</p>
-            </div>
-            <div className="flex flex-wrap gap-2 mb-8" role="group" aria-label="Filter projects">
+            </motion.div>
+            <motion.div {...reveal(0.05)} className="flex flex-wrap gap-2 mb-8" role="group" aria-label="Filter projects">
               {filters.map((f) => <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)} className={'px-4 py-2 border-2 border-ink font-mono text-xs transition-colors ' + (filter === f ? 'bg-ink text-paper' : 'hover:bg-yellow')}>{f}</button>)}
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
+            </motion.div>
+            <motion.div layout={!reduced} className="grid md:grid-cols-2 gap-4">
+              <AnimatePresence initial={false} mode="popLayout">
               {shown.map((item, index) => (
-                <article key={item.name} className="border-2 border-ink p-6 md:p-8 bg-paper hover:bg-paper-dim transition-colors flex flex-col min-h-[320px]">
+                <motion.article key={item.name} layout={!reduced} {...(reduced ? {} : { initial: { opacity: 0, y: 18, scale: 0.99 }, animate: { opacity: 1, y: 0, scale: 1 }, exit: { opacity: 0, y: -9, scale: 0.99 }, whileHover: { y: -4 }, transition: { duration: 0.4, delay: Math.min(index, 5) * 0.055 } })} className="border-2 border-ink p-6 md:p-8 bg-paper hover:bg-paper-dim transition-colors flex flex-col min-h-[320px]">
                   <div className="flex justify-between gap-4 items-start mb-7"><span className="font-mono text-xs text-blue uppercase tracking-wider">{item.type}</span><span className="font-mono text-xs border border-ink px-2 py-1">{item.tag}</span></div>
                   <h3 className="font-display text-3xl md:text-4xl mb-3">{item.name}</h3>
                   <p className="leading-relaxed text-ink-soft mb-4">{item.description}</p>
@@ -83,32 +87,33 @@ export default function Recruiters({ onOpenPrivacy }) {
                       {item.site && <External href={item.site} className="inline-flex items-center gap-1 font-mono text-xs font-bold underline underline-offset-4 hover:text-blue">Live project</External>}
                     </div>
                   </div>
-                </article>
+                </motion.article>
               ))}
-            </div>
+              </AnimatePresence>
+            </motion.div>
           </div>
         </section>
 
         <section className="grid lg:grid-cols-2 border-b-2 border-ink">
           <div className="px-5 md:px-10 py-16 md:py-20 lg:border-r-2 border-ink">
-            <div className="max-w-xl ml-auto"><p className="font-mono text-blue text-xs uppercase tracking-widest mb-3">02 / Capabilities</p><h2 className="font-display text-5xl md:text-6xl mb-8">Skills &amp; tools</h2>
-              {skills.map(([heading, detail]) => <div key={heading} className="border-t border-ink/30 py-5"><h3 className="font-mono text-xs uppercase tracking-wider text-blue mb-2">{heading}</h3><p className="leading-relaxed">{detail}</p></div>)}
-            </div>
+            <motion.div {...reveal()} className="max-w-xl ml-auto"><p className="font-mono text-blue text-xs uppercase tracking-widest mb-3">02 / Capabilities</p><h2 className="font-display text-5xl md:text-6xl mb-8">Skills &amp; tools</h2>
+              {skills.map(([heading, detail], i) => <motion.div key={heading} {...reveal(i * 0.06)} className="border-t border-ink/30 py-5"><h3 className="font-mono text-xs uppercase tracking-wider text-blue mb-2">{heading}</h3><p className="leading-relaxed">{detail}</p></motion.div>)}
+            </motion.div>
           </div>
           <div className="px-5 md:px-10 py-16 md:py-20 bg-paper-dim">
-            <div className="max-w-xl"><p className="font-mono text-blue text-xs uppercase tracking-widest mb-3">03 / Background</p><h2 className="font-display text-5xl md:text-6xl mb-8">Where I come from</h2>
+            <motion.div {...reveal(0.1)} className="max-w-xl"><p className="font-mono text-blue text-xs uppercase tracking-widest mb-3">03 / Background</p><h2 className="font-display text-5xl md:text-6xl mb-8">Where I come from</h2>
               <p className="text-lg leading-relaxed mb-8">I hold a B.Eng. in Electrical &amp; Electronics Engineering from Olabisi Onabanjo University (2023). My work combines software projects with technical communication, digital operations and hands-on troubleshooting.</p>
               <div className="space-y-6">
                 <div className="flex gap-4"><Code2 className="shrink-0 text-blue" /><div><h3 className="font-semibold">Independent software projects · BeepeeLabs</h3><p className="text-sm text-ink-soft mt-1">Developed products for education, form handling, mobile workflows and web experiences.</p></div></div>
                 <div className="flex gap-4"><Layers3 className="shrink-0 text-blue" /><div><h3 className="font-semibold">Public Health Office · NYSC placement</h3><p className="text-sm text-ink-soft mt-1">Supported administrative and operational work at Ukwa East LGI Public Health Office.</p></div></div>
                 <div className="flex gap-4"><Smartphone className="shrink-0 text-blue" /><div><h3 className="font-semibold">Digital content &amp; communication</h3><p className="text-sm text-ink-soft mt-1">Experience in content writing, copywriting, social media and digital design.</p></div></div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
         <section id="contact-recruiter" className="bg-ink text-paper px-5 md:px-10 py-16 md:py-24">
-          <div className="max-w-7xl mx-auto">
+          <motion.div {...reveal()} className="max-w-7xl mx-auto">
             <p className="font-mono text-yellow text-xs uppercase tracking-widest mb-4">04 / Let's talk</p>
             <h2 className="font-display text-5xl md:text-8xl max-w-4xl leading-[1.02] mb-8">Have a role in mind? Let's talk.</h2>
             <p className="max-w-2xl text-lg text-paper/80 mb-8">I'm interested in teams where I can contribute, learn and build reliable software. Send me the role details, or ask for the CV that best fits your opening.</p>
@@ -117,7 +122,7 @@ export default function Recruiters({ onOpenPrivacy }) {
               <a className="inline-flex gap-2 items-center border border-paper px-5 py-3 font-mono text-sm hover:bg-paper hover:text-ink transition-colors" href={'mailto:' + email + '?subject=CV%20Request%20-%20Bakare%20Oluwaferanmi'}><Download size={16} /> Request CV</a>
               <External className="inline-flex gap-2 items-center border border-paper px-5 py-3 font-mono text-sm hover:bg-paper hover:text-ink transition-colors" href="https://github.com/Bakareferanmi"><Github size={16} /> GitHub</External>
             </div>
-          </div>
+          </motion.div>
         </section>
       </main>
       <Footer onOpenPrivacy={onOpenPrivacy} />
