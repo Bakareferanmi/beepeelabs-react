@@ -21,7 +21,12 @@ const skills = [
   ['Backend & cloud', 'Hono, REST APIs, Express.js, Node.js, PostgreSQL, Hono, REST APIs, Cloudflare Workers, D1, authentication, webhooks, Vercel'],
   ['Tools & other', 'Git, GitHub, Excel, technical writing, troubleshooting, Python fundamentals'],
 ]
-const roles = ['Frontend Developer', 'React Native / Mobile Developer', 'Junior Full-Stack Developer', 'Technical Support', 'Technical Writer']
+const roleGroups = [
+  { title: 'Software engineering', note: 'Primary focus', roles: ['Frontend Developer', 'React / Next.js Developer', 'React Native Developer', 'Mobile App Developer', 'Junior Full-Stack Developer', 'Junior Backend / API Developer'] },
+  { title: 'IT & technical operations', note: 'Related opportunities', roles: ['IT Support Specialist', 'Application Support Analyst', 'Technical Support Engineer', 'Junior QA / Software Tester', 'Technical Operations Associate'] },
+  { title: 'Content & digital products', note: 'Additional strengths', roles: ['Technical Writer', 'Developer Documentation Writer', 'Digital Marketing Specialist', 'Web Content / SEO Specialist'] },
+  { title: 'Data & analytics', note: 'Entry-level, developing skills', roles: ['Data Analyst Intern', 'Junior Reporting / Excel Analyst'] },
+]
 const email = 'bakareferanmi96@gmail.com'
 
 function External({ href, children, className = '' }) {
@@ -56,11 +61,29 @@ export default function Recruiters({ onOpenPrivacy }) {
           </div>
         </section>
 
-        <section className="px-5 md:px-10 py-10 border-b-2 border-ink bg-yellow">
-          <motion.div {...reveal()} className="max-w-7xl mx-auto flex flex-col md:flex-row gap-5 md:items-start md:justify-between">
-            <div className="flex items-center gap-3"><BriefcaseBusiness size={20} /><h2 className="font-display text-2xl md:text-3xl">Roles I'm exploring</h2></div>
-            <div className="flex flex-wrap gap-2 md:max-w-3xl md:justify-end">{roles.map((role, i) => <motion.span key={role} {...(reduced ? {} : { initial: { opacity: 0, y: 9 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { delay: i * 0.06, duration: 0.35 } })} className="bg-paper border border-ink px-3 py-2 font-mono text-xs">{role}</motion.span>)}</div>
-          </motion.div>
+        <section className="px-5 md:px-10 py-12 md:py-16 border-b-2 border-ink bg-yellow">
+          <div className="max-w-7xl mx-auto">
+            <motion.div {...reveal()} className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
+              <div>
+                <div className="flex items-center gap-3 mb-3"><BriefcaseBusiness size={20} aria-hidden="true" /><p className="font-mono text-xs uppercase tracking-widest">Career interests</p></div>
+                <h2 className="font-display text-4xl md:text-5xl">Roles I'm exploring</h2>
+              </div>
+              <p className="text-sm md:text-base text-ink-soft max-w-md">My strongest focus is web and mobile software development. I'm also open to adjacent technical and communication roles.</p>
+            </motion.div>
+            <div className="grid md:grid-cols-2 gap-3">
+              {roleGroups.map((group, index) => (
+                <motion.div key={group.title} {...reveal(Math.min(index, 3) * 0.07)} className="bg-paper border-2 border-ink p-5 md:p-6">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+                    <h3 className="font-display text-xl md:text-2xl">{group.title}</h3>
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-blue">{group.note}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {group.roles.map((role) => <span key={role} className="border border-ink/40 px-3 py-2 font-mono text-[11px] md:text-xs leading-snug">{role}</span>)}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section id="selected-work" className="px-5 md:px-10 py-16 md:py-24 border-b-2 border-ink">
