@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/for-recruiters", "destination": "/for-recruiters.html" },
     { "source": "/writing/:id", "destination": "/api/writing-og?id=:id" },
     { "source": "/services/:slug", "destination": "/services/:slug.html" },
     { "source": "/projects/:id", "destination": "/projects/:id.html" },

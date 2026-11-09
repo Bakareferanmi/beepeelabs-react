@@ -18,6 +18,7 @@ import WhatsAppButton from './components/WhatsAppButton'
 import ProjectModal from './components/ProjectModal'
 import PrivacyModal from './components/PrivacyModal'
 import TrafficLight from './components/TrafficLight'
+import Recruiters from './pages/Recruiters'
 import BlogPost from './pages/BlogPost'
 import NotFound from './pages/NotFound'
 import Service from './pages/Service'
@@ -26,7 +27,7 @@ import { SERVICES } from './data/services.js'
 import { PROJECT_STORIES } from './data/projectStories.js'
 import { PublicContentContext } from './lib/PublicContent.jsx'
 import { isPublishedPost } from './lib/publication.js'
-import { applyMetadata, articleMetadata, homeMetadata, notFoundMetadata, serviceMetadata, projectMetadata } from './lib/seo.js'
+import { applyMetadata, articleMetadata, homeMetadata, recruiterMetadata, notFoundMetadata, serviceMetadata, projectMetadata } from './lib/seo.js'
 import StatusStrip from "./components/StatusStrip";
 function Home({ projects, writing, dataLoading, activeProject, openProject, openPrivacy, closeModal }) {
   return (
@@ -102,6 +103,7 @@ export default function App({ initialData }) {
 
   useEffect(() => {
     if (location.pathname === '/') return applyMetadata(homeMetadata)
+    if (location.pathname === '/for-recruiters' || location.pathname === '/for-recruiters/') return applyMetadata(recruiterMetadata)
     if (projectMatch) {
       const story = PROJECT_STORIES.find((item) => item.id === projectMatch.params.id)
       applyMetadata(story ? projectMetadata(story, projects.find((item) => item.id === story.id)) : notFoundMetadata)
@@ -165,6 +167,7 @@ export default function App({ initialData }) {
             />
           }
         />
+        <Route path="/for-recruiters" element={<Recruiters onOpenPrivacy={openPrivacy} />} />
         <Route path="/writing/:id" element={<BlogPost posts={writing} loading={dataLoading} onOpenPrivacy={openPrivacy} />} />
         <Route path="/services/:slug" element={<Service onOpenPrivacy={openPrivacy} />} />
         <Route path="/projects/:id" element={<Project projects={projects} onOpenPrivacy={openPrivacy} />} />

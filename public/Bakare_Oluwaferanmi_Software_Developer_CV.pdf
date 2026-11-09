@@ -1,0 +1,84 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R /Annots [7 0 R 8 0 R] >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 5257 >>
+stream
+0.09 0.09 0.09 rg BT /F2 20 Tf 1 0 0 1 42 795 Tm (BAKARE OLUWAFERANMI PELUMI) Tj ET
+0.09 0.09 0.09 rg BT /F2 10 Tf 1 0 0 1 42 772 Tm (FULL-STACK SOFTWARE & MOBILE APP DEVELOPER) Tj ET
+0.09 0.09 0.09 rg BT /F1 8 Tf 1 0 0 1 42 754 Tm (Lagos, Nigeria | bakareferanmi96@gmail.com | github.com/Bakareferanmi) Tj ET
+0.13 0.27 0.75 rg BT /F1 8.5 Tf 1 0 0 1 42 741 Tm (Recruiter portfolio: beepeelabs.cv/for-recruiters) Tj ET
+0.13 0.27 0.75 rg BT /F1 8.5 Tf 1 0 0 1 319 741 Tm (Main portfolio: beepeelabs.cv) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 730 Tm (PROFILE) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 715 Tm (Software developer and Electrical/Electronics Engineering graduate with experience delivering web, mobile and) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 703.5 Tm (cloud-backed applications. Built and supported a live CBT examination platform, SaaS form infrastructure and) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 692 Tm (React Native apps. Interested in product engineering, solutions delivery and technical go-to-market roles.) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 673.5 Tm (TECHNICAL SKILLS) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 658.5 Tm (Web: React, Next.js, JavaScript, TypeScript, HTML, CSS, Tailwind CSS.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 647 Tm (Mobile: React Native, Expo, Expo Router, React Navigation, AsyncStorage, notifications.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 635.5 Tm (Backend & databases: Node.js, Express.js, Hono, PostgreSQL, Cloudflare D1 \(SQLite\), REST APIs, webhooks.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 624 Tm (Deployment & tools: Cloudflare Workers, Vercel, Git/GitHub, VS Code, Excel, Python fundamentals.) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 605.5 Tm (SELECTED ENGINEERING PROJECTS) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 590.5 Tm (Damiland CBT | Full-Stack Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 578.5 Tm (Developed and supported a school examination platform with timed exams, random questions, automated scoring,) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 567.5 Tm (live monitoring and results. Debugged and optimised database reads during live operation.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 556.5 Tm (React, TypeScript, Hono, Cloudflare Workers, D1 | damilandcbt.com) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 538.5 Tm (Pentreeform | SaaS / Backend Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 526.5 Tm (Built hosted form infrastructure covering authentication, email verification, submission inboxes, delivery) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 515.5 Tm (webhooks and administration. Worked across API workflows and user onboarding.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 504.5 Tm (Cloudflare Workers, APIs, Resend | github.com/Bakareferanmi/pentreeform) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 486.5 Tm (RideWithMe | Cross-Platform Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 474.5 Tm (Developed a vehicle-marketplace prototype spanning mobile, customer web and admin applications with shared) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 463.5 Tm (types, tokens and API-client structure. Prototype currently uses sample data.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 452.5 Tm (React Native, Expo Router, Next.js, TypeScript | github.com/Bakareferanmi/ridewithme) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 434.5 Tm (PerTrack | Mobile App Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 422.5 Tm (Built an offline-first teacher timetable and class-reminder mobile app with local notifications and device) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 411.5 Tm (data storage, plus a companion progressive web app.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 400.5 Tm (React Native, Expo, TypeScript, AsyncStorage | github.com/Bakareferanmi/pertrack) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 382.5 Tm (Brokoto | React Native Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 370.5 Tm (Built food-ordering mobile flows with dish browsing, custom navigation, cart state and lazily loaded screens.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 359.5 Tm (React Native, Expo, JavaScript | github.com/Bakareferanmi/brokoto) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 338.5 Tm (PRODUCT & TECHNICAL DELIVERY) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 323.5 Tm (Project work spans scoping practical user workflows, building interfaces and APIs, troubleshooting deployment) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 312 Tm (issues, improving onboarding, and explaining technical features to non-technical users.) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 293.5 Tm (OTHER EXPERIENCE & EDUCATION) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 278.5 Tm (Independent developer, BeepeeLabs | Digital content and operational experience: Grandsafer Consult, New Edge) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 267 Tm (and NYSC public health office placement.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 255.5 Tm (B.Eng., Electrical and Electronics Engineering | Olabisi Onabanjo University | 2023) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Annot /Subtype /Link /Rect [42 737 280 752] /Border [0 0 0] /A << /S /URI /URI (https://beepeelabs.cv/for-recruiters) >> >>
+endobj
+8 0 obj
+<< /Type /Annot /Subtype /Link /Rect [319 737 470 752] /Border [0 0 0] /A << /S /URI /URI (https://beepeelabs.cv/) >> >>
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000273 00000 n 
+0000000343 00000 n 
+0000000418 00000 n 
+0000005726 00000 n 
+0000005875 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+6011
+%%EOF
