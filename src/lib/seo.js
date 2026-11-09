@@ -36,6 +36,12 @@ export function articleMetadata(post) {
 }
 
 export const homeMetadata = { title: HOME_TITLE, description: HOME_DESCRIPTION, url: SITE + '/' }
+export const recruiterMetadata = {
+  title: 'Software & Mobile App Developer | Bakare Oluwaferanmi',
+  description: 'Recruiter portfolio of Bakare Oluwaferanmi: full-stack web development, React Native mobile applications, SaaS products and cloud deployments.',
+  url: SITE + '/for-recruiters',
+  schema: { '@context': 'https://schema.org', '@type': 'ProfilePage', mainEntity: { '@type': 'Person', name: 'Bakare Oluwaferanmi Pelumi', jobTitle: 'Software Developer', url: SITE + '/for-recruiters', sameAs: ['https://github.com/Bakareferanmi'] } },
+}
 export const notFoundMetadata = {
   title: 'Page not found | BeepeeLabs',
   description: 'This page is unavailable. Browse BeepeeLabs services, projects and writing.',
