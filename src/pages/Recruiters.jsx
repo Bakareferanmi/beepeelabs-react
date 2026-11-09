@@ -18,7 +18,7 @@ const filters = ['All work', 'Web applications', 'Mobile applications', 'Backend
 const skills = [
   ['Frontend', 'React, Next.js, JavaScript, TypeScript, HTML, CSS, Tailwind CSS'],
   ['Mobile', 'React Native, Expo, Expo Router, React Navigation, device storage and notifications'],
-  ['Backend & cloud', 'Hono, REST APIs, Cloudflare Workers, D1, authentication, webhooks, Vercel'],
+  ['Backend & cloud', 'Hono, REST APIs, Express.js, Node.js, PostgreSQL, Hono, REST APIs, Cloudflare Workers, D1, authentication, webhooks, Vercel'],
   ['Tools & other', 'Git, GitHub, Excel, technical writing, troubleshooting, Python fundamentals'],
 ]
 const roles = ['Frontend Developer', 'React Native / Mobile Developer', 'Junior Full-Stack Developer', 'Technical Support', 'Technical Writer']
@@ -48,7 +48,7 @@ export default function Recruiters({ onOpenPrivacy }) {
             <motion.div {...reveal(0.21)} className="grid lg:grid-cols-2 gap-8 lg:gap-20 mt-9 items-end">
               <p className="text-lg md:text-xl leading-relaxed text-ink-soft max-w-2xl">I'm a software developer with hands-on experience building web applications, React Native mobile apps and cloud-backed tools. I work across interfaces, APIs, databases, deployment and product improvement.</p>
               <div className="flex flex-wrap gap-3 lg:justify-end">
-                <a href={'mailto:' + email + '?subject=CV%20Request%20-%20Bakare%20Oluwaferanmi'} className="inline-flex items-center gap-2 bg-ink text-paper px-5 py-3 font-mono text-xs uppercase hover:bg-blue transition-colors"><Download size={16} /> Request CV</a>
+                <a href="/Bakare_Oluwaferanmi_Software_Developer_CV.pdf" download="Bakare_Oluwaferanmi_Software_Developer_CV.pdf" className="inline-flex items-center gap-2 bg-ink text-paper px-5 py-3 font-mono text-xs uppercase hover:bg-blue transition-colors"><Download size={16} /> Download CV</a>
                 <External href="https://github.com/Bakareferanmi" className="inline-flex items-center gap-2 border-2 border-ink px-5 py-3 font-mono text-xs uppercase hover:bg-yellow transition-colors"><Github size={16} /> GitHub</External>
                 <a href={'mailto:' + email + '?subject=Job%20Opportunity'} className="inline-flex items-center gap-2 border-2 border-ink px-5 py-3 font-mono text-xs uppercase hover:bg-yellow transition-colors"><Mail size={16} /> Email me</a>
               </div>
@@ -119,7 +119,7 @@ export default function Recruiters({ onOpenPrivacy }) {
             <p className="max-w-2xl text-lg text-paper/80 mb-8">I'm interested in teams where I can contribute, learn and build reliable software. Send me the role details, or ask for the CV that best fits your opening.</p>
             <div className="flex flex-wrap gap-3">
               <a className="inline-flex gap-2 items-center bg-yellow text-ink px-5 py-3 font-mono text-sm hover:bg-paper transition-colors" href={'mailto:' + email + '?subject=Job%20Opportunity'}><Mail size={16} /> Email me</a>
-              <a className="inline-flex gap-2 items-center border border-paper px-5 py-3 font-mono text-sm hover:bg-paper hover:text-ink transition-colors" href={'mailto:' + email + '?subject=CV%20Request%20-%20Bakare%20Oluwaferanmi'}><Download size={16} /> Request CV</a>
+              <a className="inline-flex gap-2 items-center border border-paper px-5 py-3 font-mono text-sm hover:bg-paper hover:text-ink transition-colors" href="/Bakare_Oluwaferanmi_Software_Developer_CV.pdf" download="Bakare_Oluwaferanmi_Software_Developer_CV.pdf"><Download size={16} /> Download CV</a>
               <External className="inline-flex gap-2 items-center border border-paper px-5 py-3 font-mono text-sm hover:bg-paper hover:text-ink transition-colors" href="https://github.com/Bakareferanmi"><Github size={16} /> GitHub</External>
             </div>
           </motion.div>
