@@ -15,53 +15,47 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
 endobj
 6 0 obj
-<< /Length 5372 >>
+<< /Length 5076 >>
 stream
-0.09 0.09 0.09 rg BT /F2 20 Tf 1 0 0 1 42 794 Tm (BAKARE OLUWAFERANMI PELUMI) Tj ET
-0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 772 Tm (FULL-STACK SOFTWARE & MOBILE APP DEVELOPER) Tj ET
-0.09 0.09 0.09 rg BT /F1 8 Tf 1 0 0 1 42 754 Tm (Lagos, Nigeria  |  bakareferanmi96@gmail.com  |  beepeelabs.cv  |  github.com/Bakareferanmi) Tj ET
-0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 729 Tm (PROFILE) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 714 Tm (Electrical and Electronics Engineering graduate building full-stack web products and cross-platform React) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 702 Tm (Native mobile applications. Experienced with React, TypeScript, API workflows, Cloudflare Workers, D1,) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 690 Tm (deployment and production troubleshooting. Built a school CBT platform used in live examinations.) Tj ET
-0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 670 Tm (TECHNICAL SKILLS) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 655 Tm (Web: React, Next.js, TypeScript, JavaScript, HTML, CSS, Tailwind CSS.) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 643 Tm (Mobile: React Native, Expo, Expo Router, React Navigation, AsyncStorage, local notifications.) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 631 Tm (Backend / data: Hono, Node.js, Express.js, PostgreSQL, Cloudflare D1 \(SQLite\), REST APIs, authentication,) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 619 Tm (webhooks.) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.7 Tf 1 0 0 1 42 607 Tm (Tools: Git, GitHub, Cloudflare Workers, Vercel, VS Code, Excel, basic Python.) Tj ET
-0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 587 Tm (SELECTED ENGINEERING PROJECTS) Tj ET
-0.09 0.09 0.09 rg BT /F2 9.2 Tf 1 0 0 1 42 572 Tm (Damiland CBT | Full-Stack Developer) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 559 Tm (Built and supported a live school examination platform: timed exams, randomised questions, autosaved answers,) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 547.5 Tm (grading, monitoring, result management and exports. Resolved production database-read issues.) Tj ET
-0.32 0.32 0.32 rg BT /F1 8 Tf 1 0 0 1 42 536 Tm (React, TypeScript, Hono, Cloudflare Workers, D1 | damilandcbt.com) Tj ET
-0.09 0.09 0.09 rg BT /F2 9.2 Tf 1 0 0 1 42 519 Tm (Pentreeform | Full-Stack Product Developer) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 506 Tm (Built a hosted form-backend SaaS with accounts, email verification, submission inboxes, webhook delivery and) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 494.5 Tm (admin workflows.) Tj ET
-0.32 0.32 0.32 rg BT /F1 8 Tf 1 0 0 1 42 483 Tm (Cloudflare Workers, APIs, Resend | github.com/Bakareferanmi/pentreeform) Tj ET
-0.09 0.09 0.09 rg BT /F2 9.2 Tf 1 0 0 1 42 466 Tm (RideWithMe | Cross-Platform Developer) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 453 Tm (Developed a vehicle-marketplace prototype with mobile, customer website and admin applications, shared tokens,) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 441.5 Tm (schemas and API client structure. Backend integration uses sample data.) Tj ET
-0.32 0.32 0.32 rg BT /F1 8 Tf 1 0 0 1 42 430 Tm (React Native, Expo Router, TypeScript, Next.js | github.com/Bakareferanmi/ridewithme) Tj ET
-0.09 0.09 0.09 rg BT /F2 9.2 Tf 1 0 0 1 42 413 Tm (PerTrack | Mobile Developer) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 400 Tm (Built offline-first teacher timetable and class-reminder mobile app with weekly local notifications and device) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 388.5 Tm (storage, plus a companion PWA.) Tj ET
-0.32 0.32 0.32 rg BT /F1 8 Tf 1 0 0 1 42 377 Tm (React Native, Expo, TypeScript, AsyncStorage | github.com/Bakareferanmi/pertrack) Tj ET
-0.09 0.09 0.09 rg BT /F2 9.2 Tf 1 0 0 1 42 360 Tm (Brokoto | Mobile Developer) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 347 Tm (Built a food-ordering mobile interface with custom navigation, shopping cart state, lazily loaded screens and) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 335.5 Tm (order flows.) Tj ET
-0.32 0.32 0.32 rg BT /F1 8 Tf 1 0 0 1 42 324 Tm (React Native, Expo, JavaScript | github.com/Bakareferanmi/brokoto) Tj ET
-0.09 0.09 0.09 rg BT /F2 9.2 Tf 1 0 0 1 42 307 Tm (VeriDoc and Deegeetal Thesis | Developer) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 294 Tm (Built verification-platform foundations and a student document-submission workflow with administrative review) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 282.5 Tm (and exports.) Tj ET
-0.32 0.32 0.32 rg BT /F1 8 Tf 1 0 0 1 42 271 Tm (React, Cloudflare Workers, D1, file uploads) Tj ET
-0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 251 Tm (EXPERIENCE) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 236 Tm (Independent development - BeepeeLabs: Built, deployed and maintained web and mobile products for education,) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 224.5 Tm (forms and business workflows.) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 213 Tm (Digital content and operations experience: Grandsafer Consult, New Edge and NYSC public health office) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.4 Tf 1 0 0 1 42 201.5 Tm (placement.) Tj ET
-0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 183 Tm (EDUCATION) Tj ET
-0.09 0.09 0.09 rg BT /F1 8.5 Tf 1 0 0 1 42 168 Tm (B.Eng. Electrical and Electronics Engineering | Olabisi Onabanjo University | 2023) Tj ET
+0.09 0.09 0.09 rg BT /F2 20 Tf 1 0 0 1 42 795 Tm (BAKARE OLUWAFERANMI PELUMI) Tj ET
+0.09 0.09 0.09 rg BT /F2 10 Tf 1 0 0 1 42 772 Tm (FULL-STACK SOFTWARE & MOBILE APP DEVELOPER) Tj ET
+0.09 0.09 0.09 rg BT /F1 8 Tf 1 0 0 1 42 754 Tm (Lagos, Nigeria | bakareferanmi96@gmail.com | beepeelabs.cv | github.com/Bakareferanmi) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 730 Tm (PROFILE) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 715 Tm (Software developer and Electrical/Electronics Engineering graduate with experience delivering web, mobile and) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 703.5 Tm (cloud-backed applications. Built and supported a live CBT examination platform, SaaS form infrastructure and) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 692 Tm (React Native apps. Interested in product engineering, solutions delivery and technical go-to-market roles.) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 673.5 Tm (TECHNICAL SKILLS) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 658.5 Tm (Web: React, Next.js, JavaScript, TypeScript, HTML, CSS, Tailwind CSS.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 647 Tm (Mobile: React Native, Expo, Expo Router, React Navigation, AsyncStorage, notifications.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 635.5 Tm (Backend & databases: Node.js, Express.js, Hono, PostgreSQL, Cloudflare D1 \(SQLite\), REST APIs, webhooks.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.6 Tf 1 0 0 1 42 624 Tm (Deployment & tools: Cloudflare Workers, Vercel, Git/GitHub, VS Code, Excel, Python fundamentals.) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 605.5 Tm (SELECTED ENGINEERING PROJECTS) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 590.5 Tm (Damiland CBT | Full-Stack Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 578.5 Tm (Developed and supported a school examination platform with timed exams, random questions, automated scoring,) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 567.5 Tm (live monitoring and results. Debugged and optimised database reads during live operation.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 556.5 Tm (React, TypeScript, Hono, Cloudflare Workers, D1 | damilandcbt.com) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 538.5 Tm (Pentreeform | SaaS / Backend Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 526.5 Tm (Built hosted form infrastructure covering authentication, email verification, submission inboxes, delivery) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 515.5 Tm (webhooks and administration. Worked across API workflows and user onboarding.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 504.5 Tm (Cloudflare Workers, APIs, Resend | github.com/Bakareferanmi/pentreeform) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 486.5 Tm (RideWithMe | Cross-Platform Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 474.5 Tm (Developed a vehicle-marketplace prototype spanning mobile, customer web and admin applications with shared) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 463.5 Tm (types, tokens and API-client structure. Prototype currently uses sample data.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 452.5 Tm (React Native, Expo Router, Next.js, TypeScript | github.com/Bakareferanmi/ridewithme) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 434.5 Tm (PerTrack | Mobile App Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 422.5 Tm (Built an offline-first teacher timetable and class-reminder mobile app with local notifications and device) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 411.5 Tm (data storage, plus a companion progressive web app.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 400.5 Tm (React Native, Expo, TypeScript, AsyncStorage | github.com/Bakareferanmi/pertrack) Tj ET
+0.09 0.09 0.09 rg BT /F2 9 Tf 1 0 0 1 42 382.5 Tm (Brokoto | React Native Developer) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.2 Tf 1 0 0 1 42 370.5 Tm (Built food-ordering mobile flows with dish browsing, custom navigation, cart state and lazily loaded screens.) Tj ET
+0.09 0.09 0.09 rg BT /F1 7.6 Tf 1 0 0 1 42 359.5 Tm (React Native, Expo, JavaScript | github.com/Bakareferanmi/brokoto) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 338.5 Tm (PRODUCT & TECHNICAL DELIVERY) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 323.5 Tm (Project work spans scoping practical user workflows, building interfaces and APIs, troubleshooting deployment) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 312 Tm (issues, improving onboarding, and explaining technical features to non-technical users.) Tj ET
+0.13 0.27 0.75 rg BT /F2 10 Tf 1 0 0 1 42 293.5 Tm (OTHER EXPERIENCE & EDUCATION) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 278.5 Tm (Independent developer, BeepeeLabs | Digital content and operational experience: Grandsafer Consult, New Edge) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 267 Tm (and NYSC public health office placement.) Tj ET
+0.09 0.09 0.09 rg BT /F1 8.3 Tf 1 0 0 1 42 255.5 Tm (B.Eng., Electrical and Electronics Engineering | Olabisi Onabanjo University | 2023) Tj ET
 endstream
 endobj
 xref
@@ -76,5 +70,5 @@ xref
 trailer
 << /Size 7 /Root 1 0 R >>
 startxref
-5819
+5523
 %%EOF
