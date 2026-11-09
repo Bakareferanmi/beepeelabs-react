@@ -26,6 +26,8 @@ const roleGroups = [
   { title: 'Mobile engineering', note: 'Cross-platform apps', roles: ['React Native Developer', 'Mobile Application Developer', 'Cross-Platform App Developer'] },
   { title: 'Backend engineering', note: 'APIs & databases', roles: ['Junior Backend Developer', 'API Developer', 'Node.js / Express.js Developer'] },
   { title: 'Related engineering roles', note: 'Junior / entry-level', roles: ['Junior Software Engineer', 'Associate Software Engineer', 'Junior QA Automation Engineer'] },
+  { title: 'Product & solutions', note: 'Technical, product-facing', roles: ['Associate Product Manager', 'Junior Product Manager', 'Product Engineer', 'Forward-Deployed Engineer', 'Solutions Engineer', 'Implementation Engineer'] },
+  { title: 'Technical GTM & growth', note: 'Product-to-market roles', roles: ['GTM Engineer', 'Growth Engineer', 'Technical Product Specialist', 'Developer Relations Associate', 'Technical Solutions Consultant'] },
 ]
 const email = 'bakareferanmi96@gmail.com'
 
@@ -68,7 +70,7 @@ export default function Recruiters({ onOpenPrivacy }) {
                 <div className="flex items-center gap-3 mb-3"><BriefcaseBusiness size={20} aria-hidden="true" /><p className="font-mono text-xs uppercase tracking-widest">Career interests</p></div>
                 <h2 className="font-display text-4xl md:text-5xl">Roles I'm exploring</h2>
               </div>
-              <p className="text-sm md:text-base text-ink-soft max-w-md">I'm focused on engineering roles across web, mobile and backend development, with interest in junior software quality engineering.</p>
+              <p className="text-sm md:text-base text-ink-soft max-w-md">My core focus is software engineering. I'm also exploring product, customer-facing engineering and technical go-to-market roles where building and shipping products matters.</p>
             </motion.div>
             <div className="grid md:grid-cols-2 gap-3">
               {roleGroups.map((group, index) => (
