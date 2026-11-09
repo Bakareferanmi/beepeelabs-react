@@ -7,6 +7,7 @@ const LINKS = [
   { href: '#projects', label: 'Projects' },
   { href: '#about', label: 'About' },
   { href: '#writing', label: 'Writing' },
+  { href: '/for-recruiters', label: 'For recruiters', externalPage: true },
 ]
 
 export default function Nav() {
@@ -50,8 +51,8 @@ export default function Nav() {
         {LINKS.map((l) => (
           <li key={l.href}>
             <a
-              href={'/' + l.href}
-              onClick={(e) => handleLink(e, l.href)}
+              href={l.externalPage ? l.href : '/' + l.href}
+              onClick={l.externalPage ? () => setOpen(false) : (e) => handleLink(e, l.href)}
               className={`font-mono text-xs uppercase tracking-wider hover:text-blue transition-colors ${
                 scrolled ? 'text-paper' : 'text-ink-soft'
               }`}
